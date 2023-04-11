@@ -9,37 +9,25 @@ import { ToastContainer } from 'react-toastify';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { store } from './redux-ts';
 import { ProtectedRoute } from './routes/protected.route';
+import Login from './features/login/login.page';
+import ErrorPage from './routes/error.page';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: (<ProtectedRoute> <Saloon /> </ProtectedRoute>),
-//   },
-//   {
-//     path: "/kitchen",
-//     element: (<ProtectedRoute> <KitchenPanel /> </ProtectedRoute>),
-//   },
-//   {
+const router = createBrowserRouter([
+  //   {
 //     path: "/config",
 //     element: (<ProtectedRoute> <Configurations /> </ProtectedRoute>),
 //   },
-//   {
-//     path: "/login",
-//     element: <Login />,
-//   },
-//   {
-//     path: '*',
-//     element: <ErrorPage />
-//   }
-// ]);
-
-const router = createBrowserRouter([
   {
-    path: "/"
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: '*',
+    element: <ErrorPage />
   }
 ])
 
