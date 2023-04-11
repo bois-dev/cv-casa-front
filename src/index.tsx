@@ -11,19 +11,24 @@ import { store } from './redux-ts';
 import { ProtectedRoute } from './routes/protected.route';
 import Login from './features/login/login.page';
 import ErrorPage from './routes/error.page';
+import { Configurations } from './features/configs/config.page';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 const router = createBrowserRouter([
-  //   {
-//     path: "/config",
-//     element: (<ProtectedRoute> <Configurations /> </ProtectedRoute>),
-//   },
+  {
+    path: "/config",
+    element: (<ProtectedRoute> <Configurations /> </ProtectedRoute>),
+  },
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: '/', //change to single page with all stuff
+    element: <ErrorPage />
   },
   {
     path: '*',
