@@ -13,17 +13,17 @@ const rightLink = {
 function AppAppBar() {
   return (
     <div>
-      <AppBar position="fixed">
+      <AppBar position="fixed" sx={{ backgroundColor: 'black', color: 'white' }}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ flex: 1 }} />
           <Link
-            variant="h6"
+            variant="h4"
             underline="none"
             color="inherit"
             href="/"
             sx={{ fontSize: 24 }}
           >
-            {'Casa App'}
+            {'ENCUENTRA PISO'}
           </Link>
           <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
             <Link
@@ -39,7 +39,7 @@ function AppAppBar() {
               variant="h6"
               underline="none"
               href="/register"
-              sx={{ ...rightLink, color: 'secondary.main' }}
+              sx={{ ...rightLink }}
             >
               {'Sign Up'}
             </Link>

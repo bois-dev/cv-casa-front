@@ -2,7 +2,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from '@mui/material/Link';
 import { useRouteError } from "react-router-dom";
 import { Container, Box, Avatar, Typography } from '@mui/material';
-import { blue } from '@mui/material/colors';
+import { red } from '@mui/material/colors';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 
 const theme = createTheme();
@@ -23,7 +23,7 @@ export default function ErrorPage() {
               alignItems: 'center',              
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: blue[500] }}>
+            <Avatar sx={{ m: 1, bgcolor: red[400] }}>
               <DangerousIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
