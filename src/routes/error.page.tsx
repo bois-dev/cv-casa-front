@@ -1,15 +1,40 @@
-import React from 'react'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Link from '@mui/material/Link';
 import { useRouteError } from "react-router-dom";
-import styles from './routes.css'
+import { Container, Box, Avatar, Typography } from '@mui/material';
+import { blue } from '@mui/material/colors';
+import DangerousIcon from '@mui/icons-material/Dangerous';
+
+const theme = createTheme();
 
 export default function ErrorPage() {
     let error = useRouteError();
     console.error(error);
   
     return (
-      <div className={styles.main}>        
-        <h1>Ops!</h1>
-        <p>Página não encontrada!</p>
-      </div>
+      <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
+          
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',              
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: blue[500] }}>
+              <DangerousIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Ops, página não encontrada!
+            </Typography>
+            <Link sx={{
+              fontSize: 20,
+              padding: 2
+            }} href="/">Volver al inicio</Link>
+          </Box>
+        </Container>      
+      </ThemeProvider>
     );
   }
