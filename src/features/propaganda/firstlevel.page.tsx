@@ -118,7 +118,7 @@ export default function FirstLevel() {
                 Apúntate
             </Button>
             <MyTypography variant="body2" color="inherit" sx={{ mt: 2 }}>
-                No perca la oportunidad!
+                ¡No percad la oportunidad!
             </MyTypography>
         </ProductHeroLayout>
     );
