@@ -30,7 +30,7 @@ const iconStyle = {
   backgroundColor: '#7fc7d9',
   mr: 1,
   '&:hover': {
-    bgcolor: 'warning.dark',
+    bgcolor: 'white',
   },
 };
 
