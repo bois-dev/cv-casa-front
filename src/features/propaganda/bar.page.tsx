@@ -33,7 +33,7 @@ function AppAppBar() {
                             href="/login"
                             sx={rightLink}
                         >
-                            {'Accender'}
+                            {'Acceder'}
                         </Link>
                         <Link
                             variant="h6"
