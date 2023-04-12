@@ -49,7 +49,7 @@ export default function PropagandaFooter() {
   return (
     <Typography
       component="footer"
-      sx={{ display: 'flex', bgcolor: '#d5d5f6' }}
+      sx={{ display: 'flex', bgcolor: 'black', color: 'white' }}
     >
       <Container sx={{ my: 8, display: 'flex' }}>
         <Grid container spacing={5}>
