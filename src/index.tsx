@@ -13,7 +13,7 @@ import Login from './features/login/login.page';
 import ErrorPage from './routes/error.page';
 import { Configurations } from './features/configs/config.page';
 import { Propaganda } from './features/propaganda/propaganda.page';
-import RegisterClient from './features/register-client/register-client.page';
+import RegisterUser from './features/register-user/register-user.page';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     // element: <Propaganda />
-    element: <RegisterClient />
+    element: <RegisterUser />
   },
   {
     path: '*',
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <AuthProvider>
+      <AuthProvider>        
         <RouterProvider router={router} />
         <ToastContainer
           pauseOnFocusLoss={false}
