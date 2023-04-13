@@ -13,6 +13,7 @@ import Login from './features/login/login.page';
 import ErrorPage from './routes/error.page';
 import { Configurations } from './features/configs/config.page';
 import { Propaganda } from './features/propaganda/propaganda.page';
+import RegisterClient from './features/register-client/register-client.page';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -28,8 +29,9 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: '/', //change to single page with all stuff
-    element: <Propaganda />
+    path: '/',
+    // element: <Propaganda />
+    element: <RegisterClient />
   },
   {
     path: '*',

@@ -62,8 +62,8 @@ export default function Footer() {
                     value={value}
                     onChange={DoNavigation}
                 >
-                    <BottomNavigationAction label="Mesas" icon={<TableBarIcon />} />
-                    <BottomNavigationAction label="Cozinha" icon={<SoupKitchenIcon />} />
+                    <BottomNavigationAction label="Nav 1" icon={<TableBarIcon />} />
+                    <BottomNavigationAction label="Nav 2" icon={<SoupKitchenIcon />} />
                     <BottomNavigationAction label="Configurações" icon={<ConstructionIcon />} />
                 </BottomNavigation>
             </Paper>

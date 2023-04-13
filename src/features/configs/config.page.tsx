@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import Footer from "../../components/footer/footer.component";
-import AppTitle from "../../components/title/apptitle.component";
+import PageTitle from "../../components/title/pagetitle.component";
 import { unauthenticate } from "../../redux-ts";
 import { useAppDispatch } from "../../redux-ts/hooks";
 
@@ -24,7 +24,7 @@ export function Configurations() {
     }
 
     return <>
-        <AppTitle text="Configurações" />
+        <PageTitle text="Configurações" />
 
         <div style={{
             display: 'flex',

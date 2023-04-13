@@ -37,7 +37,7 @@ export default function Login() {
    if (data){
     toast.success('Logado com sucesso!');
     auth.onLogin(data.access_token);
-    navigate('/');
+    navigate('/dashboard');
    }
   };
 

@@ -112,7 +112,7 @@ export default function FirstLevel() {
                 variant="contained"
                 size="large"
                 component="a"
-                href="/sign-up"
+                href="/register"
                 sx={{ minWidth: 200 }}
             >
                 Apúntate
