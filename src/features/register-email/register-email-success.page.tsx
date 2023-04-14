@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@emotion/react";
-import { Container, CssBaseline, Box, Avatar, Typography, createTheme } from "@mui/material";
+import { Container, CssBaseline, Box, Avatar, Typography, createTheme, Link } from "@mui/material";
 import { green } from "@mui/material/colors";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
@@ -26,6 +26,13 @@ export default function RegisterEmailSuccess() {
                 <Typography >
                     Te enviamos un correo para proseguir.
                 </Typography>
+                <Link
+                    underline="none"
+                    href="/login"
+                    sx={{ mt: 5 }}
+                >
+                    {'Ir para acceder'}
+                </Link>
             </Box>
         </Container>
     </ThemeProvider>
