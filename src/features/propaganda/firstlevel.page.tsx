@@ -12,7 +12,7 @@ const backgroundImage =
     'https://images.unsplash.com/photo-1649302926386-93127a3e00c0?auto=format&fit=crop&w=1400';
 
 
-const ProductHeroLayoutRoot = styled('section')(({ theme }) => ({
+const FirstLevelLayoutRoot = styled('section')(({ theme }) => ({
     color: theme.palette.common.white,
     position: 'relative',
     display: 'flex',
@@ -35,17 +35,17 @@ const Background = styled(Box)({
     zIndex: -2,
 });
 
-interface ProductHeroLayoutProps {
+interface FirstLevelLayoutProps {
     sxBackground: SxProps<Theme>;
 }
 
-function ProductHeroLayout(
-    props: React.HTMLAttributes<HTMLDivElement> & ProductHeroLayoutProps,
+function FirstLevelLayout(
+    props: React.HTMLAttributes<HTMLDivElement> & FirstLevelLayoutProps,
 ) {
     const { sxBackground, children } = props;
 
     return (
-        <ProductHeroLayoutRoot>
+        <FirstLevelLayoutRoot>
             <Container
                 sx={{
                     mt: 3,
@@ -78,13 +78,13 @@ function ProductHeroLayout(
                     sx={{ position: 'absolute', bottom: 32 }}
                 />
             </Container>
-        </ProductHeroLayoutRoot>
+        </FirstLevelLayoutRoot>
     );
 }
 
 export default function FirstLevel() {
     return (
-        <ProductHeroLayout
+        <FirstLevelLayout
             sxBackground={{
                 backgroundImage: `url(${backgroundImage})`,
                 backgroundColor: '#7fc7d9', // Average color of the background image.
@@ -122,6 +122,6 @@ export default function FirstLevel() {
             <MyTypography variant="body2" color="inherit" sx={{ mt: 2 }}>
                 ¡No percad la oportunidad!
             </MyTypography>
-        </ProductHeroLayout>
+        </FirstLevelLayout>
     );
 }
