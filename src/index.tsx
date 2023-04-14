@@ -12,7 +12,7 @@ import { ProtectedRoute } from './routes/protected.route';
 import Login from './features/login/login.page';
 import ErrorPage from './routes/error.page';
 import { Configurations } from './features/configs/config.page';
-import { Propaganda } from './features/propaganda/propaganda.page';
+//import { Propaganda } from './features/propaganda/propaganda.page';
 import RegisterUser from './features/register-user/register-user.page';
 
 const root = ReactDOM.createRoot(
