@@ -6,6 +6,8 @@ import { SxProps } from '@mui/system';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
+import ArrowDown from '../../assets/propaganda/productHeroArrowDown.png'
+
 const backgroundImage =
     'https://images.unsplash.com/photo-1649302926386-93127a3e00c0?auto=format&fit=crop&w=1400';
 
@@ -69,7 +71,7 @@ function ProductHeroLayout(
                 <Background sx={sxBackground} />
                 <Box
                     component="img"
-                    src="productHeroArrowDown.png"
+                    src={ArrowDown}
                     height="16"
                     width="12"
                     alt="arrow down"
