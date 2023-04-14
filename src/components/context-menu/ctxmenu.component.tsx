@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Logout from '@mui/icons-material/Logout';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export interface CtxMenuProps {
     anchorEl?: HTMLElement,
@@ -15,10 +16,17 @@ export default function ContextMenu(props: CtxMenuProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(props.anchorEl!);
     const [open, setOpen] = React.useState(false)
 
+    const navigate = useNavigate();
+
+    const handleLogout = () => {        
+        navigate('/login');
+        handleClose();
+    }
+    
     const handleClose = () => {
         setAnchorEl(null);
         setOpen(false)
-        
+
         if (props.onClose)
             props.onClose();
     };
@@ -65,7 +73,7 @@ export default function ContextMenu(props: CtxMenuProps) {
                 transformOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
             >
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleLogout}>
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>
