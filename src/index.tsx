@@ -12,8 +12,8 @@ import { ProtectedRoute } from './routes/protected.route';
 import Login from './features/login/login.page';
 import ErrorPage from './routes/error.page';
 import { Configurations } from './features/configs/config.page';
-//import { Propaganda } from './features/propaganda/propaganda.page';
-import RegisterUser from './features/register-user/register-user.page';
+import { Propaganda } from './features/propaganda/propaganda.page';
+import RegisterEmail from './features/register-email/register-email.page';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -29,9 +29,12 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
+    path: "/register",
+    element: <RegisterEmail />,
+  },
+  {
     path: '/',
-    // element: <Propaganda />
-    element: <RegisterUser />
+    element: <Propaganda />
   },
   {
     path: '*',

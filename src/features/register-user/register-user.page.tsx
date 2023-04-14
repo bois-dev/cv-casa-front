@@ -54,7 +54,7 @@ export default function RegisterUser(props: RegisterClientProps) {
     return <SideBar>
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="md">
-                <PageTitle text="Nuevo usuario" />
+                <PageTitle text="Rellena sus datos" />
 
                 <Box
                     sx={{
@@ -64,7 +64,7 @@ export default function RegisterUser(props: RegisterClientProps) {
                         alignItems: 'center',
                     }}
                 >
-                    <TextField id="email" label="Correo eletronico" type="email" fullWidth sx={defaultTextFieldSx} />
+                    <TextField id="email" disabled label="Correo eletronico" type="email" fullWidth sx={defaultTextFieldSx} value='read.only.email@email.com' />
                     <TextField
                         id="fullname"
                         label="Nombre y Apellidos"
