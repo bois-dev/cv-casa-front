@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -13,6 +12,7 @@ import { toast } from 'react-toastify';
 import LoginService, { DoLoginRequest } from './login.service';
 import { AuthContext } from '../../providers/auth.provider';
 import { useNavigate } from 'react-router-dom';
+import Button from '../../components/button/button.component';
 
 const theme = createTheme();
 
