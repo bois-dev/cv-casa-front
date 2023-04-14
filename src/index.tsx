@@ -14,6 +14,7 @@ import ErrorPage from './routes/error.page';
 import { Configurations } from './features/configs/config.page';
 import { Propaganda } from './features/propaganda/propaganda.page';
 import RegisterEmail from './features/register-email/register-email.page';
+import RegisterCheck from './features/register-email/register-check.page';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <RegisterEmail />,
+  },
+  {
+    path: "/register-check",
+    element: <RegisterCheck />,
   },
   {
     path: '/',
