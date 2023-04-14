@@ -13,12 +13,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import MailIcon from '@mui/icons-material/Mail';
 import { useState } from 'react';
 import { Avatar } from '@mui/material';
 import { blue } from '@mui/material/colors';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import { useNavigate } from 'react-router-dom';
+import { ClosedSidebarFooter, OpenedSidebarFooter } from './sidebarfooter';
 
 const drawerWidth = 240;
 
@@ -93,8 +94,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function SideBar(props: React.HTMLAttributes<HTMLDivElement>,) {
     const [open, setOpen] = useState(false);
-
     const { children } = props;
+
+    const navigate = useNavigate();
+
+    const handleNavigation = async (path: string) => await navigate(path);
 
     const handleOpen = async () => {
         await setOpen(!open);
@@ -119,53 +123,38 @@ export default function SideBar(props: React.HTMLAttributes<HTMLDivElement>,) {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
+                    <ListItem disablePadding sx={{ display: 'block' }}>
+                        <ListItemButton
+                            sx={{
+                                minHeight: 48,
+                                justifyContent: open ? 'initial' : 'center',
+                                px: 2.5,
+                            }}
+                            onClick={async () => await handleNavigation('/config')}
+                        >
+                            <ListItemIcon
                                 sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
+                                    minWidth: 0,
+                                    mr: open ? 3 : 'auto',
+                                    justifyContent: 'center',
                                 }}
                             >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
+                                <ConstructionIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={'Configuración'} sx={{ opacity: open ? 1 : 0 }} />
+                        </ListItemButton>
+                    </ListItem>
+                    <Divider />
                 </List>
-                <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                }}
-                            >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
+
+                <List style={{ marginTop: `auto` }} >
+                    <ListItem>
+                        {!open ? <ClosedSidebarFooter userName='Rogerson Nazario'/> : <>
+                            <OpenedSidebarFooter
+                                userName='Rogerson Nazario'
+                            />
+                        </>}
+                    </ListItem>
                 </List>
             </Drawer>
             {children}

@@ -3,10 +3,11 @@ import PageTitle from "../../components/title/pagetitle.component";
 import Container from '@mui/material/Container';
 import Button from "../../components/button/button.component";
 import { useState } from "react";
-import SideBar from "../../components/sidebar/sidebar.page";
+import SideBar from "../../components/sidebar/sidebar.component";
 import RegisterService from "./register-user.service";
 import { toast } from "react-toastify";
 import { User } from "../../model/user.model";
+import { LoadingButton } from "@mui/lab";
 
 const theme = createTheme();
 
@@ -18,6 +19,7 @@ interface RegisterClientProps {
 
 export default function RegisterUser(props: RegisterClientProps) {
     const [current, setCurrent] = useState<User>();
+    const [submiting, setSubmiting] = useState(false);
 
     let service: RegisterService;
 
@@ -31,6 +33,7 @@ export default function RegisterUser(props: RegisterClientProps) {
     const onSubmit = async () => {
         //validate
         console.log('sent')
+        await setSubmiting(true);
 
         try {
             service ??= new RegisterService();
@@ -42,6 +45,9 @@ export default function RegisterUser(props: RegisterClientProps) {
             }
         } catch (e: any) {
             toast.error(e)
+        }
+        finally {
+            await setSubmiting(false);
         }
     }
 
@@ -157,7 +163,7 @@ export default function RegisterUser(props: RegisterClientProps) {
                         />
                     </div>
 
-                    <Button
+                    {!submiting ? <Button
                         type="submit"
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
@@ -165,6 +171,16 @@ export default function RegisterUser(props: RegisterClientProps) {
                     >
                         Guardar
                     </Button>
+                        : <LoadingButton
+                            size="large"
+                            onClick={() => { }}
+                            loading
+                            variant="outlined"
+                            disabled
+                            sx={{ mt: 3, mb: 2, fontSize: 20, borderRadius: '0' }}
+                        >
+                            <span>disabled</span>
+                        </LoadingButton>}
                 </Box>
             </Container>
         </ThemeProvider>
