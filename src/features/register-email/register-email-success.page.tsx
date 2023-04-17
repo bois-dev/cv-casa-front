@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@emotion/react";
 import { Container, CssBaseline, Box, Avatar, Typography, createTheme, Link } from "@mui/material";
 import { green } from "@mui/material/colors";
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import logo from '../../assets/logo.png'
 
 export default function RegisterEmailSuccess() {
     const theme = createTheme();
@@ -17,9 +17,7 @@ export default function RegisterEmailSuccess() {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: green[500] }}>
-                    <CheckCircleOutlineIcon />
-                </Avatar>
+                <Avatar sx={{ m: 1, bgcolor: green[500] }} src={logo} />
                 <Typography component="h1" variant="h5">
                     ¡Listo!
                 </Typography>

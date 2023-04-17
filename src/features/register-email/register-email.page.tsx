@@ -42,12 +42,12 @@ export default function RegisterEmail() {
 
     const isValid = (info: any): boolean => {
         if (!info.email || !isEmail(info.email)) {
-            toast.error('E-mail inválido.');
+            toast.error('Ha informado un correo no válido.');
             return false;
         }
 
         if (!info.password) {
-            toast.error('É necessário informar uma senha.')
+            toast.error('Es necesario informar una contraseña.')
             return false;
         }
 

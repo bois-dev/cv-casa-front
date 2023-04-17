@@ -3,16 +3,16 @@ import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { blue } from '@mui/material/colors';
 import { toast } from 'react-toastify';
 import LoginService, { DoLoginRequest } from './login.service';
 import { AuthContext } from '../../providers/auth.provider';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/button/button.component';
+
+import logo from '../../assets/logo.png'
 
 const theme = createTheme();
 
@@ -67,8 +67,8 @@ export default function Login() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: blue[500] }}>
-            <LockOutlinedIcon />
+          <Avatar sx={{ m: 1 }} src={logo}>
+            {/* <LockOutlinedIcon /> */}
           </Avatar>
           <Typography component="h1" variant="h5">
             Login

@@ -1,11 +1,11 @@
 import { ThemeProvider } from "@emotion/react";
 import { Container, CssBaseline, Box, Avatar, Typography, createTheme, Link } from "@mui/material";
-import { green } from "@mui/material/colors";
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import { green, red } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import RegisterEmailService from "./register-email.service";
+
+import logo from '../../assets/logo.png'
 
 export default function RegisterCheck() {
     const theme = createTheme();
@@ -52,9 +52,7 @@ export default function RegisterCheck() {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: green[500] }}>
-                    {success ? <CheckCircleOutlineIcon /> : <WarningAmberIcon />}
-                </Avatar>
+                <Avatar sx={{ m: 1, bgcolor: success ? green[500] : red[400] }} src={logo} />
                 <Typography component="h1" variant="h5">
                     {success ? '¡Listo!' : 'Algo salió mal'}
                 </Typography>
