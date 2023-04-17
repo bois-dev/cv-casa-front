@@ -4,7 +4,7 @@ import Link from '@mui/material/Link';
 import AppBar from '../../components/title/initialtitle.component';
 import Toolbar from '../../components/title/toolbar.component';
 import { Avatar } from '@mui/material';
-import logo from '../../assets/logo.png'
+import logo from '../../assets/inverted_logo.png'
 
 const rightLink = {
     fontSize: 16,
@@ -16,9 +16,13 @@ function AppAppBar() {
     return (
         <div>
             <AppBar position="fixed" sx={{ backgroundColor: 'black', color: 'white' }}>
-                <Toolbar sx={{ justifyContent: 'space-between' }}>                    
+                <Toolbar sx={{ justifyContent: 'space-between' }}>
                     <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}>
-                        <Avatar sx={{ m: 1, bgcolor: 'white' }} src={logo} />
+
+                        <Link href="/">
+                            <Avatar sx={{ m: 1 }} src={logo} />
+                        </Link>
+
                         <Link variant="h4"
                             underline="none"
                             color="inherit"
