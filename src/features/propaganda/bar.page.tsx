@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import AppBar from '../../components/title/initialtitle.component';
 import Toolbar from '../../components/title/toolbar.component';
+import { Avatar } from '@mui/material';
+import logo from '../../assets/logo.png'
 
 const rightLink = {
     fontSize: 16,
@@ -14,17 +16,27 @@ function AppAppBar() {
     return (
         <div>
             <AppBar position="fixed" sx={{ backgroundColor: 'black', color: 'white' }}>
-                <Toolbar sx={{ justifyContent: 'space-between' }}>
-                    <Box sx={{ flex: 1 }} />
-                    <Link
+                <Toolbar sx={{ justifyContent: 'space-between' }}>                    
+                    <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}>
+                        <Avatar sx={{ m: 1, bgcolor: 'white' }} src={logo} />
+                        <Link variant="h4"
+                            underline="none"
+                            color="inherit"
+                            href="/"
+                            sx={{
+                                fontSize: 24,
+                                mt: 2
+                            }}>{'ENCUENTRA PISO'}</Link>
+                    </Box>
+                    {/* <Link
                         variant="h4"
                         underline="none"
                         color="inherit"
                         href="/"
                         sx={{ fontSize: 24 }}
                     >
-                        {'ENCUENTRA PISO'}
-                    </Link>
+
+                    </Link> */}
                     <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
                         <Link
                             color="inherit"
