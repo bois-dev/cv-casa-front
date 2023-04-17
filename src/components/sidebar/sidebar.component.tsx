@@ -12,13 +12,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useState } from 'react';
 import { Avatar } from '@mui/material';
-import { blue } from '@mui/material/colors';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import { useNavigate } from 'react-router-dom';
 import { ClosedSidebarFooter, OpenedSidebarFooter } from './sidebarfooter';
+
+import logo from '../../assets/logo.png'
 
 const drawerWidth = 240;
 
@@ -90,9 +90,7 @@ export default function SideBar(props: React.HTMLAttributes<HTMLDivElement>,) {
                         display: 'flex',
                         flexDirection: 'column',
                     }}>
-                        <Avatar sx={{ m: 1, bgcolor: blue[500] }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
+                        <Avatar sx={{ m: 1 }} src={logo} />
                         <IconButton onClick={handleOpen}>
                             {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                         </IconButton>
