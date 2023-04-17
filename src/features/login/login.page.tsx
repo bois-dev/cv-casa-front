@@ -13,6 +13,8 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../components/button/button.component';
 
 import logo from '../../assets/logo.png'
+import { Checkbox, FormControlLabel } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 const theme = createTheme();
 
@@ -21,37 +23,51 @@ export default function Login() {
   const loginService = new LoginService();
   const auth = React.useContext(AuthContext);
   const navigate = useNavigate();
-  
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+
+  const [email, setEmail] = useState('')
+
+  useEffect(() => {
+    const lastmail = localStorage.getItem('lastmail');
+    if (lastmail)
+      setEmail(lastmail)
+  }, [])
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    
-    const values : DoLoginRequest = {
+
+    const values: DoLoginRequest = {
       username: String(formData.get('email')),
       password: String(formData.get('password')),
     };
 
     if (!isValid(values)) return;
 
-   const { data } = await loginService.doLogin(values);
-   if (data){
-    toast.success('Logado com sucesso!');
-    auth.onLogin(data.access_token);
-    navigate('/dashboard');
-   }
+    const { data } = await loginService.doLogin(values);
+    if (data) {
+
+      const rememberme = Boolean(formData.get('remember'))
+      if (rememberme)
+        localStorage.setItem('lastmail', values.username)
+
+      toast.success('Logado com sucesso!');
+      auth.onLogin(data.access_token);
+
+      navigate('/dashboard');
+    }
   };
 
-  const isValid = (info: DoLoginRequest) : boolean => {
-    if (!info.username){
-        toast.error('E-mail inválido.');
-        return false;
+  const isValid = (info: DoLoginRequest): boolean => {
+    if (!info.username) {
+      toast.error('E-mail inválido.');
+      return false;
     }
 
-    if (!info.password){
-        toast.error('É necessário informar uma senha.')
-        return false;
+    if (!info.password) {
+      toast.error('É necessário informar uma senha.')
+      return false;
     }
-    
+
     return true;
   }
 
@@ -83,6 +99,8 @@ export default function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={async (e) => await setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -94,21 +112,21 @@ export default function Login() {
               id="password"
               autoComplete="current-password"
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Lembrar de mim"
-            /> */}
+            <FormControlLabel
+              control={<Checkbox name="remember" value="remember" color="primary" defaultChecked />}
+              label="Recordar mi correo"
+            />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Logar
+              Acceder
             </Button>
           </Box>
         </Box>
-      </Container>      
+      </Container>
     </ThemeProvider>
   );
 }
