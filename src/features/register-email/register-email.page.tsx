@@ -7,12 +7,12 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { blue } from '@mui/material/colors';
 import { toast } from 'react-toastify';
 import Button from '../../components/button/button.component';
 import RegisterEmailService from './register-email.service';
 import { useState } from 'react';
 import RegisterEmailSuccess from './register-email-success.page';
+import logo from '../../assets/logo.png'
 
 const theme = createTheme();
 
@@ -77,7 +77,7 @@ export default function RegisterEmail() {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: blue[500] }}>
+                    <Avatar sx={{ m: 1 }} src={logo}>
                         <PersonAddIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">

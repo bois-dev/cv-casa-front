@@ -28,15 +28,6 @@ function AppAppBar() {
                                 mt: 2
                             }}>{'ENCUENTRA PISO'}</Link>
                     </Box>
-                    {/* <Link
-                        variant="h4"
-                        underline="none"
-                        color="inherit"
-                        href="/"
-                        sx={{ fontSize: 24 }}
-                    >
-
-                    </Link> */}
                     <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
                         <Link
                             color="inherit"
