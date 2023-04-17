@@ -6,51 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { AuthProvider } from './providers/auth.provider';
 import { ToastContainer } from 'react-toastify';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import { store } from './redux-ts';
-import { ProtectedRoute } from './routes/protected.route';
-import Login from './features/login/login.page';
-import ErrorPage from './routes/error.page';
-import { Configurations } from './features/configs/config.page';
-import { Propaganda } from './features/propaganda/propaganda.page';
-import RegisterEmail from './features/register-email/register-email.page';
-import RegisterCheck from './features/register-email/register-check.page';
+import { router } from './routes';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const router = createBrowserRouter([
-  {
-    path: "/config",
-    element: (<ProtectedRoute> <Configurations /> </ProtectedRoute>),
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <RegisterEmail />,
-  },
-  {
-    path: "/register-check",
-    element: <RegisterCheck />,
-  },
-  {
-    path: '/',
-    element: <Propaganda />
-  },
-  {
-    path: '*',
-    element: <ErrorPage />
-  }
-])
-
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <AuthProvider>        
+      <AuthProvider>
         <RouterProvider router={router} />
         <ToastContainer
           pauseOnFocusLoss={false}

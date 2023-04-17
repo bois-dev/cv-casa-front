@@ -7,7 +7,7 @@ import DangerousIcon from '@mui/icons-material/Dangerous';
 
 const theme = createTheme();
 
-export default function ErrorPage() {
+export function ErrorPage() {
   let error = useRouteError();
   console.error(error);
 

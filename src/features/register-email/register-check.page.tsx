@@ -23,9 +23,9 @@ export default function RegisterCheck() {
 
     const checkId = async () => {
         if (searchParams.has('id')) {
-            const value = searchParams.get('id')
+            const id = searchParams.get('id')
 
-            const { data } = await service.check(value!)
+            const { data } = await service.check(id!)
             if (!data)
                 navigate('/')
             else {
