@@ -83,9 +83,8 @@ export default function Login() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1 }} src={logo}>
-            {/* <LockOutlinedIcon /> */}
-          </Avatar>
+          <Avatar sx={{ m: 1 }} src={logo}/>
+          
           <Typography component="h1" variant="h5">
             Login
           </Typography>
@@ -95,7 +94,7 @@ export default function Login() {
               required
               fullWidth
               id="email"
-              label="Usuário"
+              label="Correo eletrónico"
               name="email"
               autoComplete="email"
               autoFocus
@@ -107,7 +106,7 @@ export default function Login() {
               required
               fullWidth
               name="password"
-              label="Senha"
+              label="Contraseña"
               type="password"
               id="password"
               autoComplete="current-password"
