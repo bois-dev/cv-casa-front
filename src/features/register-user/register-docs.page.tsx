@@ -56,14 +56,16 @@ const gridColumns: GridColDef[] = [
     },
 ]
 
-const rows = [
-    { id: 1, name: 'Comprovante do banco', date: new Date('1/11/2022'), age: 35 },
-    { id: 2, name: 'Tarjeta Identificacao extranjero', date: new Date('1/11/2022'), age: 42 },
-    { id: 3, name: 'Contrato de trabajo', date: new Date('1/21/2022'), age: 45 },
-];
+interface docCols {
+    id: number,
+    name: string,
+    date: Date
+}
 
 export default function RegisterDocs(props: SliceProps) {
     const [addDocumentVisible, setAddDocumentVisible] = useState(false);
+    const [rows, setRows] = useState<docCols[]>([])
+
 
     return <Box sx={{
         mt: 8,
@@ -90,12 +92,14 @@ export default function RegisterDocs(props: SliceProps) {
         {addDocumentVisible &&
             <NewDocumentDialog
                 onClose={async () => await setAddDocumentVisible(false)}
-                onSave={async (d: AddDocument) => console.log(d)}
+                onSave={async (d: AddDocument) => {
+                    await setRows([...rows!, { name: d.content.name, id: new Date().getMilliseconds(), date: new Date() }])
+                }}
             />}
 
         <OwnGrid
             columns={gridColumns}
-            rows={rows}
+            rows={rows!}
         />
 
     </Box>

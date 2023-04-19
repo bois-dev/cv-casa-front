@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { blue } from "@mui/material/colors";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridOverlay } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 
 interface OwnGridProps {
@@ -41,6 +41,13 @@ export default function OwnGrid(props: OwnGridProps) {
                 footerRowSelected: (count) => `${count} línea${count > 1 ? 's' : ''} selecionada${count > 1 ? 's' : ''}`,
             }}
             autoHeight
+            components={{
+                NoRowsOverlay: () => <>
+                    <GridOverlay>
+                        <div>Sin dados</div>
+                    </GridOverlay>
+                </>
+            }}
         />
     </Box>
 }
