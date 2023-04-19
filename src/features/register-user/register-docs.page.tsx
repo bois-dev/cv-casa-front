@@ -1,12 +1,14 @@
-import { Box } from "@mui/material"
+import { Box, Button, IconButton } from "@mui/material"
 import OwnGrid from "../../components/grid/owngrid.component"
-import { SliceProps } from "./register-user.interfaces"
+import { AddDocument, SliceProps } from "./register-user.interfaces"
 import { GridColDef } from "@mui/x-data-grid"
 import DeleteIcon from '@mui/icons-material/Delete';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import { HelpOutline } from "@mui/icons-material";
+import NewDocumentDialog from "./newdoc.dialog";
+import { useState } from "react";
 
 const gridColumns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90 },
     {
         field: 'name',
         headerName: 'Documento',
@@ -61,12 +63,40 @@ const rows = [
 ];
 
 export default function RegisterDocs(props: SliceProps) {
+    const [addDocumentVisible, setAddDocumentVisible] = useState(false);
+
     return <Box sx={{
         mt: 8,
     }}>
+        <Box
+            sx={{
+                flex: '1 1 auto',
+                display: 'flex',
+                justifyContent: 'flex-end',
+                mb: 3
+            }}
+        >
+            <Button
+                variant="contained"
+                onClick={() => setAddDocumentVisible(true)} sx={{ mr: 1, fontSize: 12 }}>
+                Añadir documento
+            </Button>
+
+            <IconButton color="primary" aria-label="upload picture" component="label">
+                <HelpOutline />
+            </IconButton>
+        </Box>
+
+        {addDocumentVisible &&
+            <NewDocumentDialog
+                onClose={async () => await setAddDocumentVisible(false)}
+                onSave={async (d: AddDocument) => console.log(d)}
+            />}
+
         <OwnGrid
             columns={gridColumns}
             rows={rows}
         />
+
     </Box>
 }

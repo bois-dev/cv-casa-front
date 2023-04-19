@@ -13,3 +13,8 @@ export const enum steps {
     Documents,
     Summary
 }
+
+export interface AddDocument {
+    name: string,
+    content: File
+}
