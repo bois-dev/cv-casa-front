@@ -6,8 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Divider } from '@mui/material';
-import { AddDocument } from './register-user.interfaces';
-import UploadArea from '../../components/upload/upload.component';
+import { AddDocument } from '../register-user.interfaces';
+import UploadArea from '../../../components/upload/upload.component';
 
 interface NewDocumentDialogProps {
     current?: AddDocument,

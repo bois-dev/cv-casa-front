@@ -1,5 +1,5 @@
 import { Box, TextField, FormControlLabel, Checkbox, SxProps, Theme } from "@mui/material";
-import { User } from "../../model/user.model";
+import { User } from "../../../model/user.model";
 import { useEffect, useState } from "react";
 
 const defaultTextFieldSx: SxProps<Theme> = { mb: 3 }

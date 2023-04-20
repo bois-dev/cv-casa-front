@@ -1,12 +1,13 @@
 import { Box, Button, IconButton } from "@mui/material"
-import OwnGrid from "../../components/grid/owngrid.component"
-import { AddDocument, SliceProps } from "./register-user.interfaces"
+import OwnGrid from "../../../components/grid/owngrid.component"
+import { AddDocument, SliceProps } from "../register-user.interfaces"
 import { GridColDef } from "@mui/x-data-grid"
 import DeleteIcon from '@mui/icons-material/Delete';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import { HelpOutline } from "@mui/icons-material";
 import NewDocumentDialog from "./newdoc.dialog";
 import { useState } from "react";
+import { User } from "../../../model/user.model";
 
 const gridColumns: GridColDef[] = [
     {
@@ -56,16 +57,60 @@ const gridColumns: GridColDef[] = [
     },
 ]
 
-interface docCols {
+interface documentColumn {
     id: number,
     name: string,
-    date: Date
+    date: Date,
+    content: File
+}
+
+interface stateProps {
+    addDocumentVisible: boolean,
 }
 
 export default function RegisterDocs(props: SliceProps) {
-    const [addDocumentVisible, setAddDocumentVisible] = useState(false);
-    const [rows, setRows] = useState<docCols[]>([])
+    const [stateProp, setStateProp] = useState<stateProps>({ addDocumentVisible: false });
 
+    const [rows, setRows] = useState<documentColumn[]>(props.current?.documents?.map(ud => {
+        return {
+            id: ud.id,
+            content: ud.file,
+            name: ud.name,
+            date: ud.date
+        }
+    }) ?? [])
+
+    const [current, setCurrent] = useState<User>(props.current)
+
+    const onSaveNewDoc = async (d: AddDocument) => {
+
+        const newDoc: documentColumn = {
+            name: d.content.name,
+            id: new Date().getMilliseconds(),
+            date: new Date(),
+            content: d.content
+        };
+
+        const newRows = [...rows, newDoc]
+
+        await setRows(newRows)
+
+        const newCurrent: User = {
+            ...current,
+            documents: newRows.map(docCol => {
+                return {
+                    file: docCol.content,
+                    name: docCol.name,
+                    date: docCol.date,
+                    id: docCol.id
+                }
+            })
+        }
+
+        await setCurrent(newCurrent)
+
+        await props.onCurrentChange(newCurrent)
+    }
 
     return <Box sx={{
         mt: 8,
@@ -80,7 +125,7 @@ export default function RegisterDocs(props: SliceProps) {
         >
             <Button
                 variant="contained"
-                onClick={() => setAddDocumentVisible(true)} sx={{ mr: 1, fontSize: 12 }}>
+                onClick={async () => await setStateProp({ ...stateProp, addDocumentVisible: true })} sx={{ mr: 1, fontSize: 12 }}>
                 Añadir documento
             </Button>
 
@@ -89,12 +134,10 @@ export default function RegisterDocs(props: SliceProps) {
             </IconButton>
         </Box>
 
-        {addDocumentVisible &&
+        {stateProp?.addDocumentVisible &&
             <NewDocumentDialog
-                onClose={async () => await setAddDocumentVisible(false)}
-                onSave={async (d: AddDocument) => {
-                    await setRows([...rows!, { name: d.content.name, id: new Date().getMilliseconds(), date: new Date() }])
-                }}
+                onClose={async () => await setStateProp({ ...stateProp, addDocumentVisible: false })}
+                onSave={onSaveNewDoc}
             />}
 
         <OwnGrid

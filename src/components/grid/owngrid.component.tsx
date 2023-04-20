@@ -9,13 +9,26 @@ interface OwnGridProps {
     loading?: boolean
 }
 
+interface StateProps {
+    columns: GridColDef[],
+    rows: any[]
+}
+
 export default function OwnGrid(props: OwnGridProps) {
-    const [columns, setColumns] = useState<GridColDef[]>(props.columns)
+    const [stateProps, setStateProps] = useState<StateProps>({ columns: props.columns, rows: props.rows })
+
     useEffect(() => {
         const newColumns = props.columns.map(current => { return { ...current, headerClassName: 'super-app-theme--header' } as GridColDef })
-        setColumns(newColumns)
-        // eslint-disable-next-line
-    }, [])
+
+        setStateProps({ ...stateProps, columns: newColumns })
+
+        //eslint-disable-next-line
+    }, [props.columns])
+
+    useEffect(() => {
+        setStateProps({ ...stateProps, rows: props.rows })
+        //eslint-disable-next-line
+    }, [props.rows])
 
     return <Box
         sx={{
@@ -26,8 +39,8 @@ export default function OwnGrid(props: OwnGridProps) {
             },
         }}>
         <DataGrid
-            rows={props.rows}
-            columns={columns}
+            rows={stateProps.rows}
+            columns={stateProps.columns}
             loading={props.loading}
             initialState={{
                 pagination: {

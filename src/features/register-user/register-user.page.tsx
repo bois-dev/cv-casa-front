@@ -6,10 +6,10 @@ import SideBar from "../../components/sidebar/sidebar.component";
 import RegisterService from "./register-user.service";
 import { toast } from "react-toastify";
 import { User } from "../../model/user.model";
-import BasicInfo from "./register-basicinfo.page";
+import BasicInfo from "./basic-info/register-basicinfo.page";
 import Button from "../../components/button/button.component";
-import RegisterDocs from "./register-docs.page";
-import Summary from "./summary.page";
+import RegisterDocs from "./documents/register-docs.page";
+import Summary from "./summary/summary.page";
 import { stepLabels, steps } from "./register-user.interfaces";
 
 const theme = createTheme();
@@ -26,6 +26,7 @@ export default function RegisterUser(props: RegisterClientProps) {
     let service: RegisterService;
 
     const onCurrentChange = async (user: User) => {
+        console.log(user)
         await setCurrent(user);
     }
 
