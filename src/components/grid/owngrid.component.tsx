@@ -28,7 +28,7 @@ export default function OwnGrid(props: OwnGridProps) {
     useEffect(() => {
         setStateProps({ ...stateProps, rows: props.rows })
         //eslint-disable-next-line
-    }, [props.rows])
+    }, [props])
 
     return <Box
         sx={{

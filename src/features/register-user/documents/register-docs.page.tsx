@@ -8,54 +8,7 @@ import { HelpOutline } from "@mui/icons-material";
 import NewDocumentDialog from "./newdoc.dialog";
 import { useState } from "react";
 import { User } from "../../../model/user.model";
-
-const gridColumns: GridColDef[] = [
-    {
-        field: 'name',
-        headerName: 'Documento',
-        flex: 1,
-        minWidth: 350,
-    },
-    {
-        field: 'date',
-        headerName: 'Fecha',
-        type: 'date',
-        width: 110,
-    },
-    {
-        field: 'link',
-        headerName: 'Ver',
-        description: 'Haz clic para ver el documento subido',
-        sortable: false,
-        width: 90,
-        renderCell: (params) => {
-            return (
-                <>
-                    <ManageSearchIcon sx={{
-                        cursor: 'pointer'
-                    }} onClick={() => console.log(params.row)} />
-
-                </>
-            );
-        }
-    },
-    {
-        field: 'delete',
-        headerName: 'Apagar',
-        description: 'Haz clic para apagar el documento subido',
-        sortable: false,
-        width: 90,
-        renderCell: (params) => {
-            return (
-                <>
-                    <DeleteIcon sx={{
-                        cursor: 'pointer'
-                    }} onClick={() => console.log(params.row)} />
-                </>
-            );
-        }
-    },
-]
+import AlertDialog from "../../../components/alert/alert.component";
 
 interface documentColumn {
     id: number,
@@ -66,11 +19,12 @@ interface documentColumn {
 
 interface stateProps {
     addDocumentVisible: boolean,
+    removeDocumentVisible: boolean,
+    documentToRemove?: string
 }
 
 export default function RegisterDocs(props: SliceProps) {
-    const [stateProp, setStateProp] = useState<stateProps>({ addDocumentVisible: false });
-
+    const [stateProp, setStateProp] = useState<stateProps>({ addDocumentVisible: false, removeDocumentVisible: false });
     const [rows, setRows] = useState<documentColumn[]>(props.current?.documents?.map(ud => {
         return {
             id: ud.id,
@@ -81,6 +35,62 @@ export default function RegisterDocs(props: SliceProps) {
     }) ?? [])
 
     const [current, setCurrent] = useState<User>(props.current)
+
+    const gridColumns: GridColDef[] = [
+        {
+            field: 'name',
+            headerName: 'Documento',
+            flex: 1,
+            minWidth: 350,
+        },
+        {
+            field: 'date',
+            headerName: 'Fecha',
+            type: 'date',
+            width: 110,
+        },
+        {
+            field: 'link',
+            headerName: 'Ver',
+            description: 'Haz clic para ver el documento subido',
+            sortable: false,
+            width: 90,
+            renderCell: (params) => {
+                return (
+                    <>
+                        <ManageSearchIcon sx={{
+                            cursor: 'pointer'
+                        }} onClick={() => onViewClick(params.row)} />
+
+                    </>
+                );
+            },
+        },
+        {
+            field: 'delete',
+            headerName: 'Apagar',
+            description: 'Haz clic para apagar el documento subido',
+            sortable: false,
+            width: 90,
+            renderCell: (params) => {
+                return (
+                    <>
+                        <DeleteIcon sx={{
+                            cursor: 'pointer'
+                        }} onClick={async () => await onDeleteClick(params.row)} />
+                    </>
+                );
+            }
+        },
+    ]
+
+    const onDeleteClick = async (row: documentColumn) => {
+        await setStateProp({...stateProp, removeDocumentVisible: true, documentToRemove: row.name})
+    }
+
+    const onViewClick = async (row: documentColumn) => {
+
+    }
 
     const onSaveNewDoc = async (d: AddDocument) => {
 
@@ -93,6 +103,25 @@ export default function RegisterDocs(props: SliceProps) {
 
         const newRows = [...rows, newDoc]
 
+        await updateRows(newRows)        
+    }
+
+    const onConfirmRemoveDocument = async () => {
+        await setStateProp({...stateProp, removeDocumentVisible: false})
+
+        let newRows = [...rows]
+        const index = newRows.findIndex(d => d.name === stateProp.documentToRemove!)
+
+        newRows.splice(index, 1)
+
+        await updateRows(newRows)
+    }
+
+    async function onCancelRemoveDocument(): Promise<any> {
+        await setStateProp({...stateProp, removeDocumentVisible: false})
+    }
+
+    const updateRows = async (newRows: documentColumn[]) => {
         await setRows(newRows)
 
         const newCurrent: User = {
@@ -134,15 +163,22 @@ export default function RegisterDocs(props: SliceProps) {
             </IconButton>
         </Box>
 
-        {stateProp?.addDocumentVisible &&
+        {stateProp.addDocumentVisible &&
             <NewDocumentDialog
                 onClose={async () => await setStateProp({ ...stateProp, addDocumentVisible: false })}
                 onSave={onSaveNewDoc}
             />}
 
+        {stateProp.removeDocumentVisible &&
+            <AlertDialog
+                onConfirm={onConfirmRemoveDocument}
+                onCancel={onCancelRemoveDocument}
+                text={`Desea borrar ese documento?`}
+            />}
+
         <OwnGrid
             columns={gridColumns}
-            rows={rows!}
+            rows={rows}
         />
 
     </Box>
