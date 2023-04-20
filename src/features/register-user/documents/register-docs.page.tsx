@@ -9,6 +9,7 @@ import NewDocumentDialog from "./newdoc.dialog";
 import { useState } from "react";
 import { User } from "../../../model/user.model";
 import AlertDialog from "../../../components/alert/alert.component";
+import ViewDocumentDialog from "./viewdoc.dialog";
 
 interface documentColumn {
     id: number,
@@ -20,11 +21,18 @@ interface documentColumn {
 interface stateProps {
     addDocumentVisible: boolean,
     removeDocumentVisible: boolean,
-    documentToRemove?: string
+    removeDocumentName?: string
+    viewDocumentVisible: boolean,
+    viewDocumentContent?: File
 }
 
 export default function RegisterDocs(props: SliceProps) {
-    const [stateProp, setStateProp] = useState<stateProps>({ addDocumentVisible: false, removeDocumentVisible: false });
+    const [stateProp, setStateProp] = useState<stateProps>({
+        addDocumentVisible: false,
+        removeDocumentVisible: false,
+        viewDocumentVisible: false
+    });
+
     const [rows, setRows] = useState<documentColumn[]>(props.current?.documents?.map(ud => {
         return {
             id: ud.id,
@@ -52,7 +60,7 @@ export default function RegisterDocs(props: SliceProps) {
         {
             field: 'link',
             headerName: 'Ver',
-            description: 'Haz clic para ver el documento subido',
+            description: 'Haz clic para veer el documento',
             sortable: false,
             width: 90,
             renderCell: (params) => {
@@ -68,8 +76,8 @@ export default function RegisterDocs(props: SliceProps) {
         },
         {
             field: 'delete',
-            headerName: 'Apagar',
-            description: 'Haz clic para apagar el documento subido',
+            headerName: 'Borrar',
+            description: 'Haz clic para borrar el documento',
             sortable: false,
             width: 90,
             renderCell: (params) => {
@@ -85,11 +93,11 @@ export default function RegisterDocs(props: SliceProps) {
     ]
 
     const onDeleteClick = async (row: documentColumn) => {
-        await setStateProp({...stateProp, removeDocumentVisible: true, documentToRemove: row.name})
+        await setStateProp({ ...stateProp, removeDocumentVisible: true, removeDocumentName: row.name })
     }
 
     const onViewClick = async (row: documentColumn) => {
-
+        await setStateProp({ ...stateProp, viewDocumentVisible: true, viewDocumentContent: row.content })
     }
 
     const onSaveNewDoc = async (d: AddDocument) => {
@@ -103,14 +111,14 @@ export default function RegisterDocs(props: SliceProps) {
 
         const newRows = [...rows, newDoc]
 
-        await updateRows(newRows)        
+        await updateRows(newRows)
     }
 
     const onConfirmRemoveDocument = async () => {
-        await setStateProp({...stateProp, removeDocumentVisible: false})
+        await setStateProp({ ...stateProp, removeDocumentVisible: false })
 
         let newRows = [...rows]
-        const index = newRows.findIndex(d => d.name === stateProp.documentToRemove!)
+        const index = newRows.findIndex(d => d.name === stateProp.removeDocumentName!)
 
         newRows.splice(index, 1)
 
@@ -118,7 +126,7 @@ export default function RegisterDocs(props: SliceProps) {
     }
 
     async function onCancelRemoveDocument(): Promise<any> {
-        await setStateProp({...stateProp, removeDocumentVisible: false})
+        await setStateProp({ ...stateProp, removeDocumentVisible: false })
     }
 
     const updateRows = async (newRows: documentColumn[]) => {
@@ -173,7 +181,13 @@ export default function RegisterDocs(props: SliceProps) {
             <AlertDialog
                 onConfirm={onConfirmRemoveDocument}
                 onCancel={onCancelRemoveDocument}
-                text={`Desea borrar ese documento?`}
+                text={`Desea borrar el documento '${stateProp.removeDocumentName}'?`}
+            />}
+
+        {stateProp.viewDocumentVisible &&
+            <ViewDocumentDialog
+                current={stateProp.viewDocumentContent!}
+                onClose={async () => await setStateProp({ ...stateProp, viewDocumentVisible: false })}
             />}
 
         <OwnGrid
