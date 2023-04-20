@@ -31,13 +31,22 @@ export default function BasicInfo(props: BasicInfoProps) {
             alignItems: 'center',
         }}
     >
-        <TextField id="email" disabled label="Correo eletronico" type="email" fullWidth sx={defaultTextFieldSx} value='read.only.email@email.com' />
+        <TextField
+            id="email"
+            disabled
+            label="Correo eletronico"
+            type="email"
+            fullWidth
+            sx={defaultTextFieldSx}
+            value={current?.email ?? 'read.only.email@email.com'}
+        />
+
         <TextField
             id="fullname"
             label="Nombre y Apellidos"
             fullWidth
             sx={defaultTextFieldSx}
-            value={current?.fullname}
+            value={current?.fullname ?? ''}
             error={current && !current.fullname}
             onChange={async (e) => await setCurrent({ ...current!, fullname: e.target.value })}
         />

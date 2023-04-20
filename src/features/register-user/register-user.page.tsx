@@ -26,7 +26,6 @@ export default function RegisterUser(props: RegisterClientProps) {
     let service: RegisterService;
 
     const onCurrentChange = async (user: User) => {
-        console.log(user)
         await setCurrent(user);
     }
 

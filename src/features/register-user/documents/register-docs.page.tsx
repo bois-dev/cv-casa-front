@@ -59,7 +59,7 @@ export default function RegisterDocs(props: SliceProps) {
         },
         {
             field: 'link',
-            headerName: 'Ver',
+            headerName: 'Veer',
             description: 'Haz clic para veer el documento',
             sortable: false,
             width: 90,
