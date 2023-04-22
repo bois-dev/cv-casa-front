@@ -33,7 +33,7 @@ export default function RegisterUser(props: RegisterClientProps) {
         //validate
         await setSubmiting(true);
 
-        console.log(submiting)
+        console.log(current)
 
         try {
             service ??= new RegisterService();
@@ -86,10 +86,7 @@ export default function RegisterUser(props: RegisterClientProps) {
 
                 <Box
                     sx={{
-                        flex: '1 1 auto',
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        mt: 3
+                        position: 'fixed', bottom: '20%', right: '0'
                     }}
                 >
                     <Button
@@ -97,11 +94,11 @@ export default function RegisterUser(props: RegisterClientProps) {
                         disabled={activeStep <= 0} onClick={async () => await onSliderButtonClick(activeStep - 1)} sx={{ mr: 1 }}>
                         Anterior
                     </Button>
-                    <Button
+                    {!submiting && <Button
                         variant="contained"
                         onClick={async () => await onSliderButtonClick(activeStep + 1)} sx={{ mr: 1 }}>
                         {activeStep !== stepLabels.length - 1 ? 'Proximo' : 'Concluir'}
-                    </Button>
+                    </Button>}
                 </Box>
             </Container>
         </ThemeProvider>
