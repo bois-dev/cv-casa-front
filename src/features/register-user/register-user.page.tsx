@@ -61,7 +61,7 @@ export default function RegisterUser(props: RegisterClientProps) {
 
     return <SideBar>
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="md">
+            <Container maxWidth="md">
                 <PageTitle text="Rellena sus datos" />
                 <Stepper activeStep={activeStep} alternativeLabel nonLinear>
                     {stepLabels.map((value, index) =>
@@ -84,23 +84,43 @@ export default function RegisterUser(props: RegisterClientProps) {
                     onCurrentChange={onCurrentChange}
                 />}
 
-                <Box
-                    sx={{
-                        position: 'fixed', bottom: '20%', right: '0'
-                    }}
-                >
-                    <Button
-                        variant="contained"
-                        disabled={activeStep <= 0} onClick={async () => await onSliderButtonClick(activeStep - 1)} sx={{ mr: 1 }}>
-                        Anterior
-                    </Button>
-                    {!submiting && <Button
-                        variant="contained"
-                        onClick={async () => await onSliderButtonClick(activeStep + 1)} sx={{ mr: 1 }}>
-                        {activeStep !== stepLabels.length - 1 ? 'Proximo' : 'Concluir'}
-                    </Button>}
-                </Box>
+                <InternalFooter
+                    activeStep={activeStep}
+                    submiting={submiting}
+                    onSliderButtonClick={onSliderButtonClick}
+                />
+
             </Container>
         </ThemeProvider>
     </SideBar>
+}
+
+
+interface InternalFooterProps {
+    activeStep: number,
+    submiting: boolean,
+    onSliderButtonClick: (n: number) => Promise<any>
+}
+
+function InternalFooter(props: InternalFooterProps) {
+    const { activeStep, submiting, onSliderButtonClick } = props;
+
+    return <Box
+        sx={{
+            display:'flex', 
+            justifyContent: 'flex-end',
+            mt: 3
+        }}
+    >
+        <Button
+            variant="contained"
+            disabled={activeStep <= 0} onClick={async () => await onSliderButtonClick(activeStep - 1)} sx={{ mr: 1 }}>
+            Anterior
+        </Button>
+        {!submiting && <Button
+            variant="contained"
+            onClick={async () => await onSliderButtonClick(activeStep + 1)} sx={{ mr: 1 }}>
+            {activeStep !== stepLabels.length - 1 ? 'Proximo' : 'Concluir'}
+        </Button>}
+    </Box>
 }

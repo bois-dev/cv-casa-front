@@ -1,9 +1,10 @@
-import { Box, Typography, Divider } from "@mui/material";
+import { Box, Typography, Divider, Theme, SxProps } from "@mui/material";
 
 interface SummaryInfoItemProps {
     primary: string,
     secondary: any,
-    bottomDivider?: boolean
+    bottomDivider?: boolean,
+    sx?: SxProps<Theme>
 }
 
 export default function SummaryInfoItem(props: SummaryInfoItemProps) {
@@ -12,7 +13,8 @@ export default function SummaryInfoItem(props: SummaryInfoItemProps) {
             display: 'flex',
             justifyContent: 'space-between',
             maxWidth: 500,
-            mb: 1
+            mb: 1,
+            ...props.sx!
         }}>
             <Typography variant="body2" fontWeight={'bold'}>
                 {props.primary}

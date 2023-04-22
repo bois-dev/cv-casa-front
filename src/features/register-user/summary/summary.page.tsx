@@ -12,7 +12,10 @@ export default function Summary(props: SliceProps) {
         <Box sx={{
             width: '100%',
             mt: 8,
-            alignItems: 'center'
+            padding: 4,
+            alignItems: 'center',
+            backgroundColor: 'whitesmoke',
+            borderRadius: '20px'
         }}>
             <SummarySubtitle title="Dados generales" icon={<PersonIcon />} />
             <SummaryInfoItem primary="Nombre y Apelidos" secondary={current?.fullname ?? 'FAVOR INFORMAR'} bottomDivider />
@@ -26,7 +29,7 @@ export default function Summary(props: SliceProps) {
             <SummaryInfoItem primary="Puedo residir legalmente en España" secondary={(current && current.hasDocs !== undefined) ? (current.hasDocs ? 'Si' :  'No') : 'No'} bottomDivider={false} />
             
             <SummarySubtitle title="Documentos" sx={{ mt: 5 }} icon={<ContactPageIcon />}  />
-            <SummaryInfoItem primary="Numero de documentos añadidos" secondary={current?.documents?.length ?? '0'} bottomDivider />
+            <SummaryInfoItem primary="Numero de documentos añadidos" secondary={current?.documents?.length ?? '0'} bottomDivider={false} />
         </Box>
     </>
 }

@@ -29,6 +29,9 @@ export default function BasicInfo(props: BasicInfoProps) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            padding: 4,
+            backgroundColor: 'whitesmoke',
+            borderRadius: '20px'
         }}
     >
         <TextField
@@ -98,7 +101,7 @@ export default function BasicInfo(props: BasicInfoProps) {
         <div style={{
             display: 'flex',
             width: '100%',
-            justifyContent: 'space-around'
+            justifyContent: 'space-between'
         }}>
             <FormControlLabel
                 control={
@@ -121,8 +124,13 @@ export default function BasicInfo(props: BasicInfoProps) {
                     />
                 }
                 label="Tengo mascota"
-            />
-
+            />            
+            </div>
+            <div style={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'space-between'
+            }}>
             <FormControlLabel
                 control={
                     <Checkbox
