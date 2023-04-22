@@ -27,7 +27,6 @@ export default function Summary(props: SliceProps) {
             
             <SummarySubtitle title="Documentos" sx={{ mt: 5 }} icon={<ContactPageIcon />}  />
             <SummaryInfoItem primary="Numero de documentos añadidos" secondary={current?.documents?.length ?? '0'} bottomDivider />
-
         </Box>
     </>
 }
