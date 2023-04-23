@@ -23,6 +23,27 @@ export default function UploadArea(props: UploadAreaProps) {
         props.onFileSelected(e);
     }
 
+    const [, setDragActive] = useState(false);
+
+    const handleDrag = function (e: any) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.type === "dragenter" || e.type === "dragover") {
+            setDragActive(true);
+        } else if (e.type === "dragleave") {
+            setDragActive(false);
+        }
+    };
+
+    const handleDrop = async (e: any) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setDragActive(false);
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            await onFileSelected(e.dataTransfer.files[0] as File)
+        }
+    };
+
     return (
         <Card
             sx={{
@@ -45,7 +66,12 @@ export default function UploadArea(props: UploadAreaProps) {
                         display: 'flex',
                         flexDirection: 'column',
                         maxWidth: 200,
-                    }}>
+                    }}
+                        onDragEnter={handleDrag}
+                        onDragLeave={handleDrag}
+                        onDragOver={handleDrag}
+                        onDrop={handleDrop}
+                    >
                         <Typography gutterBottom variant="h6" component="div" sx={{
                             overflowWrap: 'break-word',
                             wordWrap: 'break-word'
