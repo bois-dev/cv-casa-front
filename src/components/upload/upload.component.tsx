@@ -23,22 +23,22 @@ export default function UploadArea(props: UploadAreaProps) {
         props.onFileSelected(e);
     }
 
-    const [, setDragActive] = useState(false);
-
-    const handleDrag = function (e: any) {
+    const handleDrag = async (e: any) => {
         e.preventDefault();
         e.stopPropagation();
         if (e.type === "dragenter" || e.type === "dragover") {
-            setDragActive(true);
+            await setFileName('Solte el arquivo aquí')
+            await setSubtitleVisible(false)
         } else if (e.type === "dragleave") {
-            setDragActive(false);
+            await setFileName('Procesando...')
+            await setSubtitleVisible(true)
         }
     };
 
     const handleDrop = async (e: any) => {
         e.preventDefault();
         e.stopPropagation();
-        setDragActive(false);
+
         if (e.dataTransfer.files && e.dataTransfer.files[0]) {
             await onFileSelected(e.dataTransfer.files[0] as File)
         }
@@ -49,7 +49,7 @@ export default function UploadArea(props: UploadAreaProps) {
             sx={{
                 maxWidth: 345,
                 borderStyle: 'dotted',
-                borderColor: blue[400]
+                borderColor: blue[400],
             }}
             onClick={onButtonClick}
         >
