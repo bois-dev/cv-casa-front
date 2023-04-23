@@ -2,7 +2,7 @@ import { Box, TextField, FormControlLabel, Checkbox, SxProps, Theme } from "@mui
 import { User } from "../../../model/user.model";
 import { useEffect, useState } from "react";
 
-const defaultTextFieldSx: SxProps<Theme> = { mb: 3 }
+const defaultTextFieldSx: SxProps<Theme> = { mb: 3, backgroundColor: 'white' }
 
 interface BasicInfoProps {
     onCurrentChange: (user: User) => Promise<any>
@@ -82,8 +82,7 @@ export default function BasicInfo(props: BasicInfoProps) {
                 id="wantsToPay"
                 label="Cuanto gustaria pagar al mes?"
                 type="number"
-                fullWidth
-                sx={{ ...defaultTextFieldSx, pr: 10 }}
+                sx={{ ...defaultTextFieldSx }}
                 value={current?.wantsToPay ?? 0}
                 onChange={async (e) => await setCurrent({ ...current!, wantsToPay: parseFloat(e.target.value) })}
             />
@@ -92,7 +91,7 @@ export default function BasicInfo(props: BasicInfoProps) {
                 id="antecipateRents"
                 label="Cuantos meses en adelanto puede pagar?"
                 type="number"
-                fullWidth
+                variant="outlined"
                 sx={defaultTextFieldSx}
                 value={current?.antecipateRents ?? 0}
                 onChange={(e) => handleOnlyInt(e, { antecipateRents: parseInt(e.target.value) })} />
