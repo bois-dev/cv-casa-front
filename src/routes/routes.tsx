@@ -6,7 +6,8 @@ import RegisterEmail from "../features/register-email/register-email.page";
 import { ErrorPage } from "./error.page";
 import { ProtectedRoute } from "./protected.route";
 import Login from "../features/login/login.page";
-import RegisterUser from "../features/register-user/register-user.page";
+//import RegisterUser from "../features/register-user/register-user.page";
+import RegisterRealtor from "../features/register-realtor/register-realtor.page";
 
 export const router = createBrowserRouter([
     {
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/',
-        element: <RegisterUser />
+        element: <RegisterRealtor />
         // element: <Propaganda />
     },
     {
