@@ -3,7 +3,8 @@ import { SliceProps } from "../register-user.interfaces"
 import SummarySubtitle from "./summary-subtitle.page";
 import SummaryInfoItem from "./summary-info-item.page";
 import PersonIcon from '@mui/icons-material/Person';
-import ContactPageIcon from '@mui/icons-material/ContactPage';
+import ArticleIcon from '@mui/icons-material/Article';
+import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 
 export default function Summary(props: SliceProps) {
     const { current } = props;
@@ -15,7 +16,9 @@ export default function Summary(props: SliceProps) {
             padding: 4,
             alignItems: 'center',
             backgroundColor: 'whitesmoke',
-            borderRadius: '20px'
+            borderRadius: '20px',
+            overflowY: "scroll",
+            height: 600,
         }}>
             <SummarySubtitle title="Dados generales" icon={<PersonIcon />} />
             <SummaryInfoItem primary="Nombre y Apelidos" secondary={current?.fullname ?? 'FAVOR INFORMAR'} bottomDivider />
@@ -27,8 +30,16 @@ export default function Summary(props: SliceProps) {
             <SummaryInfoItem primary="Tengo mascota" secondary={(current && current.hasPets !== undefined) ? (current.hasPets ? 'Si' :  'No') : 'No'} bottomDivider />
             <SummaryInfoItem primary="Ya estoy en España" secondary={(current && current.alreadyInSpain !== undefined) ? (current.alreadyInSpain ? 'Si' :  'No') : 'No'} bottomDivider />
             <SummaryInfoItem primary="Puedo residir legalmente en España" secondary={(current && current.hasDocs !== undefined) ? (current.hasDocs ? 'Si' :  'No') : 'No'} bottomDivider={false} />
+
+            <SummarySubtitle title="Contactos" sx={{ mt: 5 }} icon={<ConnectWithoutContactIcon />}  />
+            <SummaryInfoItem primary="Teléfono" secondary={current?.contacts?.tel ?? '-'} bottomDivider />
+            <SummaryInfoItem primary="Mobile" secondary={current?.contacts?.cel ?? '-'} bottomDivider />
+            <SummaryInfoItem primary="Correo eletrónico" secondary={current?.contacts?.email ?? '-'} bottomDivider />
+            <SummaryInfoItem primary="Instagram" secondary={current?.contacts?.instagram ?? '-'} bottomDivider />
+            <SummaryInfoItem primary="Facebook" secondary={current?.contacts?.facebook ?? '-'} bottomDivider />
+            <SummaryInfoItem primary="LinkedIn" secondary={current?.contacts?.linkedin ?? '-'} bottomDivider />
             
-            <SummarySubtitle title="Documentos" sx={{ mt: 5 }} icon={<ContactPageIcon />}  />
+            <SummarySubtitle title="Documentos" sx={{ mt: 5 }} icon={<ArticleIcon />}  />
             <SummaryInfoItem primary="Numero de documentos añadidos" secondary={current?.documents?.length ?? '0'} bottomDivider={false} />
         </Box>
     </>

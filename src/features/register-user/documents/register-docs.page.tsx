@@ -159,13 +159,14 @@ export default function RegisterDocs(props: SliceProps) {
         alignItems: 'center',
         padding: 4,
         backgroundColor: 'whitesmoke',
-        borderRadius: '20px'
+        borderRadius: '20px',
+        minHeight: '550'
     }}>
         <Box
             sx={{
                 display: 'flex',
                 mb: 3,
-                marginLeft: 'auto'
+                marginLeft: 'auto',                
             }}
         >
             <Button

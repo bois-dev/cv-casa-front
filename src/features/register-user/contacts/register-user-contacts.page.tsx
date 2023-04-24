@@ -43,10 +43,20 @@ export default function UserContacts(props: UserContactsProps) {
             label="Teléfono"
             type="tel"
             fullWidth
-            helperText={'Añadir el codigo del país al inicio. Ejemplo: +553298888-7777'}
+            helperText={'Añadir el codigo del país al inicio. Ejemplo: +55323234-5588'}
             sx={defaultTextFieldSx}
             value={current?.tel ?? ''}
             onChange={async (e) => await setCurrent({ ...current!, tel: e.target.value })}
+        />
+         <TextField
+            id="mobile"
+            label="Móbile"
+            type="tel"
+            fullWidth
+            helperText={'Añadir el codigo del país al inicio. Ejemplo: +553298888-7777'}
+            sx={defaultTextFieldSx}
+            value={current?.cel ?? ''}
+            onChange={async (e) => await setCurrent({ ...current!, cel: e.target.value })}
         />
         <TextField
             id="Instagram"

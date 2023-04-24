@@ -14,6 +14,7 @@ export default function SummaryInfoItem(props: SummaryInfoItemProps) {
             justifyContent: 'space-between',
             maxWidth: 500,
             mb: 1,
+            mt: 1,
             ...props.sx!
         }}>
             <Typography variant="body2" fontWeight={'bold'}>
