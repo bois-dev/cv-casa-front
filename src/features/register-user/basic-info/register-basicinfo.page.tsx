@@ -35,16 +35,6 @@ export default function BasicInfo(props: BasicInfoProps) {
         }}
     >
         <TextField
-            id="email"
-            disabled
-            label="Correo eletronico"
-            type="email"
-            fullWidth
-            sx={defaultTextFieldSx}
-            value={current?.email ?? 'read.only.email@email.com'}
-        />
-
-        <TextField
             id="fullname"
             label="Nombre y Apellidos"
             fullWidth
@@ -89,7 +79,7 @@ export default function BasicInfo(props: BasicInfoProps) {
 
             <TextField
                 id="antecipateRents"
-                label="Cuantos meses en adelanto puede pagar?"
+                label="Meses en adelanto"
                 type="number"
                 variant="outlined"
                 sx={defaultTextFieldSx}
@@ -123,13 +113,13 @@ export default function BasicInfo(props: BasicInfoProps) {
                     />
                 }
                 label="Tengo mascota"
-            />            
-            </div>
-            <div style={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between'
-            }}>
+            />
+        </div>
+        <div style={{
+            display: 'flex',
+            width: '100%',
+            justifyContent: 'space-between'
+        }}>
             <FormControlLabel
                 control={
                     <Checkbox

@@ -6,10 +6,11 @@ export interface SliceProps {
     onCurrentChange: (user: User) => Promise<any>
 }
 
-export const stepLabels = ["Informacion basica", "Documentos", "Resumo y Concluir"]
+export const stepLabels = ["Informacion basica", "Contactos", "Documentos", "Resumo y Concluir"]
 
 export const enum steps {
-    BasicInfo,
+    BasicInfo,    
+    Contacts,
     Documents,
     Summary
 }

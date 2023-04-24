@@ -1,6 +1,5 @@
-export interface User {
-    email:string,
-    fullname: string,
+export interface User {    
+    fullname: string,    
     age: number,
     peopleQt: number,
     wantsToPay: number,
@@ -9,7 +8,8 @@ export interface User {
     hasPets: boolean,
     hasDocs: boolean,
     alreadyInSpain: boolean,
-    documents: UserDocument[]
+    documents: UserDocument[],
+    contacts: UserContact
 }
 
 export interface UserDocument {
@@ -17,4 +17,13 @@ export interface UserDocument {
     file: File,
     name: string,
     date: Date,
+}
+
+export interface UserContact {
+    tel: string,
+    cel: string,
+    email:string,
+    instagram:string,
+    facebook:string,
+    linkedin:string,
 }

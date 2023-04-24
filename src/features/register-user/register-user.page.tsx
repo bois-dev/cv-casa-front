@@ -11,6 +11,7 @@ import Button from "../../components/button/button.component";
 import RegisterDocs from "./documents/register-docs.page";
 import Summary from "./summary/summary.page";
 import { stepLabels, steps } from "./register-user.interfaces";
+import UserContacts from "./contacts/register-user-contacts.page";
 
 const theme = createTheme();
 
@@ -79,6 +80,11 @@ export default function RegisterUser(props: RegisterClientProps) {
                     onCurrentChange={onCurrentChange}
                 />}
 
+                {activeStep === steps.Contacts && <UserContacts
+                    current={current!}
+                    onCurrentChange={onCurrentChange}
+                />}
+
                 {activeStep === steps.Summary && <Summary
                     current={current!}
                     onCurrentChange={onCurrentChange}
@@ -107,7 +113,7 @@ function InternalFooter(props: InternalFooterProps) {
 
     return <Box
         sx={{
-            display:'flex', 
+            display: 'flex',
             justifyContent: 'flex-end',
             mt: 3
         }}
