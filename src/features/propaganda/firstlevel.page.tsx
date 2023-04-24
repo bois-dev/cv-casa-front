@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Button from '../../components/button/button.component';
+import { Button } from '../../components/button/button.component';
 import MyTypography from '../../components/Typography/typography.component';
 import { Theme, styled } from '@mui/material/styles';
 import { SxProps } from '@mui/system';

@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import LoginService, { DoLoginRequest } from './login.service';
 import { AuthContext } from '../../providers/auth.provider';
 import { useNavigate } from 'react-router-dom';
-import Button from '../../components/button/button.component';
+import { Button } from '../../components/button/button.component';
 
 import logo from '../../assets/logo.png'
 import { Checkbox, FormControlLabel } from '@mui/material';
@@ -83,8 +83,8 @@ export default function Login() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1 }} src={logo}/>
-          
+          <Avatar sx={{ m: 1 }} src={logo} />
+
           <Typography component="h1" variant="h5">
             Login
           </Typography>

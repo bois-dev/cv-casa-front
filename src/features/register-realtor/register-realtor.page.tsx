@@ -4,7 +4,7 @@ import Container from '@mui/material/Container';
 import { useState } from "react";
 import SideBar from "../../components/sidebar/sidebar.component";
 import { toast } from "react-toastify";
-import Button from "../../components/button/button.component";
+import { Button } from "../../components/button/button.component";
 import { stepLabels } from "./register-realtor.interface";
 import { Realtor } from "../../model/realtor.model";
 import RegisterRealtorService from "./register-realtor.service";
@@ -62,7 +62,7 @@ export default function RegisterRealtor(props: RegisterClientProps) {
             <Container maxWidth="md">
                 <PageTitle text="Rellena sus datos" />
                 <Stepper activeStep={activeStep} alternativeLabel nonLinear>
-                    {stepLabels.map((value: any, index : number) =>
+                    {stepLabels.map((value: any, index: number) =>
                         <Step key={index}>
                             <StepButton onClick={async () => await onSliderButtonClick(index)}>{value}</StepButton>
                         </Step>)}

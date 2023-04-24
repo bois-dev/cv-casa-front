@@ -7,7 +7,7 @@ import RegisterService from "./register-user.service";
 import { toast } from "react-toastify";
 import { User } from "../../model/user.model";
 import BasicInfo from "./basic-info/register-basicinfo.page";
-import Button from "../../components/button/button.component";
+import { Button } from "../../components/button/button.component";
 import RegisterDocs from "./documents/register-docs.page";
 import Summary from "./summary/summary.page";
 import { stepLabels, steps } from "./register-user.interfaces";

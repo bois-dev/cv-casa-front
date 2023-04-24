@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { toast } from 'react-toastify';
-import Button from '../../components/button/button.component';
+import { Button } from '../../components/button/button.component';
 import RegisterEmailService from './register-email.service';
 import { useState } from 'react';
 import RegisterEmailSuccess from './register-email-success.page';
@@ -67,68 +67,68 @@ export default function RegisterEmail() {
     }
 
     return <>{!registered ? <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <Box
-                    sx={{
-                        marginTop: 8,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Avatar sx={{ m: 1 }} src={logo}>
-                        <PersonAddIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Dar Alta
-                    </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                        <TextField
-                            margin="normal"
-                            required
-                            type="email"
-                            fullWidth
-                            id="email"
-                            label="Correo Eletronico"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Contraseña"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                        />
+        <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <Avatar sx={{ m: 1 }} src={logo}>
+                    <PersonAddIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    Dar Alta
+                </Typography>
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <TextField
+                        margin="normal"
+                        required
+                        type="email"
+                        fullWidth
+                        id="email"
+                        label="Correo Eletronico"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Contraseña"
+                        type="password"
+                        id="password"
+                        autoComplete="current-password"
+                    />
 
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="confirmpassword"
-                            label="Confirmar contraseña"
-                            type="password"
-                            id="confirmpassword"
-                            autoComplete="current-password"
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                        >
-                            apuntar
-                        </Button>
-                    </Box>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="confirmpassword"
+                        label="Confirmar contraseña"
+                        type="password"
+                        id="confirmpassword"
+                        autoComplete="current-password"
+                    />
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                    >
+                        apuntar
+                    </Button>
                 </Box>
-            </Container>
-        </ThemeProvider>
+            </Box>
+        </Container>
+    </ThemeProvider>
         : <RegisterEmailSuccess />
-        }
-        </>
+    }
+    </>
 }
