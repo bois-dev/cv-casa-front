@@ -10,6 +10,7 @@ import { useState } from "react";
 import { User } from "../../../model/user.model";
 import AlertDialog from "../../../components/alert/alert.component";
 import ViewDocumentDialog from "./viewdoc.dialog";
+import ViewHelpDocumentDialog from "./viewhelp.dialog";
 
 interface documentColumn {
     id: number,
@@ -23,6 +24,7 @@ interface stateProps {
     removeDocumentVisible: boolean,
     removeDocumentName?: string
     viewDocumentVisible: boolean,
+    viewHelpDialog: boolean,
     viewDocumentContent?: File
 }
 
@@ -30,7 +32,8 @@ export default function RegisterDocs(props: SliceProps) {
     const [stateProp, setStateProp] = useState<stateProps>({
         addDocumentVisible: false,
         removeDocumentVisible: false,
-        viewDocumentVisible: false
+        viewDocumentVisible: false,
+        viewHelpDialog: false
     });
 
     const [rows, setRows] = useState<documentColumn[]>(props.current?.documents?.map(ud => {
@@ -171,7 +174,9 @@ export default function RegisterDocs(props: SliceProps) {
                 Añadir documento
             </Button>
 
-            <IconButton color="primary" aria-label="upload picture" component="label">
+            <IconButton color="primary" aria-label="upload picture" component="label"
+                onClick={async () => await setStateProp({ ...stateProp, viewHelpDialog: true })}
+            >
                 <HelpOutline />
             </IconButton>
         </Box>
@@ -193,6 +198,11 @@ export default function RegisterDocs(props: SliceProps) {
             <ViewDocumentDialog
                 current={stateProp.viewDocumentContent!}
                 onClose={async () => await setStateProp({ ...stateProp, viewDocumentVisible: false })}
+            />}
+
+        {stateProp.viewHelpDialog &&
+            <ViewHelpDocumentDialog
+                onClose={async () => await setStateProp({ ...stateProp, viewHelpDialog: false })}
             />}
 
         <OwnGrid
