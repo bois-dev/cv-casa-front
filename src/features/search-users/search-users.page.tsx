@@ -6,7 +6,6 @@ import SideBar from "../../components/sidebar/sidebar.component";
 import { toast } from "react-toastify";
 import SearchUsersService from "./search-users.service";
 import { SearchFields } from "./search-users.interfaces";
-import { Button as MyButton } from "../../components/button/button.component";
 import NakedSelect from "../../components/select/naked-select.component";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import SearchUsersMoreFilters from "./search-users-more-filters.page";
@@ -43,16 +42,19 @@ export default function SearchUsers(props: SearchUsersProps) {
     // eslint-disable-next-line
     let service: SearchUsersService;
 
-    const onSearch = async () => {
+    const onSearch = async (local: SearchFields) => {
         //validate
+        await setCurrent(local);
+
         await setSubmiting(true);
 
-        console.log(current)
+        if (current.save)
+            await onSaveFilter(local)
 
         try {
             service ??= new SearchUsersService();
 
-            await service.search(current)
+            await service.search(local)
         } catch (e: any) {
             toast.error(e)
         }
@@ -61,15 +63,16 @@ export default function SearchUsers(props: SearchUsersProps) {
         }
     }
 
-    const onSaveFilter = async () => {
-        localStorage.setItem(filterKey, JSON.stringify({ ...current, save: true }))
+    const onSaveFilter = async (localCurrent: SearchFields) => {
+        console.log(localCurrent)
+        localStorage.setItem(filterKey, JSON.stringify(localCurrent))
     }
 
-    const getTotalOtherFiltersApplied = () : number => {
+    const getTotalOtherFiltersApplied = (): number => {
         let total = 0;
 
-        if (current?.age.from !== -1 || current?.age.to !== -1) total++;
-        
+        if ((current?.age?.from ?? -1) !== -1 || (current?.age?.to ?? -1) !== -1) total++;
+
         return total;
     }
 
@@ -105,7 +108,10 @@ export default function SearchUsers(props: SearchUsersProps) {
                         label="Mascotas"
                         name="hasPets-label"
                         value={current?.hasPets ?? -1}
-                        onChange={async (e) => await setCurrent({ ...current!, hasPets: e })}
+                        onChange={async (e) => {
+                            const local = { ...current!, hasPets: e }
+                            await onSearch(local)
+                        }}
                     />
 
                     <NakedSelect
@@ -115,7 +121,10 @@ export default function SearchUsers(props: SearchUsersProps) {
                         label="Niños Pequeños"
                         name="hasKids-label"
                         value={current?.hasKids ?? -1}
-                        onChange={async (e) => await setCurrent({ ...current!, hasKids: e })}
+                        onChange={async (e) => {
+                            const local = { ...current!, hasKids: e }
+                            await onSearch(local)
+                        }}
                     />
 
                     <NakedSelect
@@ -125,7 +134,11 @@ export default function SearchUsers(props: SearchUsersProps) {
                         label="Puede residir legalmente en España"
                         name="hasDocs-label"
                         value={current?.hasDocs ?? -1}
-                        onChange={async (e) => await setCurrent({ ...current!, hasDocs: e })}
+                        onChange={async (e) => {
+                            const local = { ...current!, hasDocs: e }
+
+                            await onSearch(local)
+                        }}
                     />
 
                     <NakedSelect
@@ -135,15 +148,39 @@ export default function SearchUsers(props: SearchUsersProps) {
                         label="Ya está en España"
                         name="alreadyInSpain-label"
                         value={current?.alreadyInSpain ?? -1}
-                        onChange={async (e) => await setCurrent({ ...current!, alreadyInSpain: e })}
+                        onChange={async (e) => {
+                            const local = { ...current!, alreadyInSpain: e }
+
+                            await onSearch(local)
+                        }}
                     />
                 </Box>
 
-                <InternalFooter
-                    current={current}
-                    onSearchClick={onSearch}
-                    onSaveFilter={onSaveFilter}
-                />
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        mt: 3
+                    }}
+                >
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={current?.save ?? false}
+                                name="hasKids"
+                                color="primary"
+                                onChange={async () => {
+                                    const localCurrent = { ...current!, save: !current.save }
+
+                                    await setCurrent(localCurrent)
+
+                                    await onSaveFilter(localCurrent)
+                                }}
+                            />
+                        }
+                        label={'Salvar filtros'}
+                    />
+                </Box>
 
                 <Backdrop
                     sx={{ color: '#fff' }}
@@ -155,7 +192,11 @@ export default function SearchUsers(props: SearchUsersProps) {
                 {showMoreFilters && <SearchUsersMoreFilters
                     current={current}
                     onClose={async () => await setShowMoreFilters(false)}
-                    onFilter={async (newFilter: SearchFields) => await setCurrent({ ...current, ...newFilter })}
+                    onFilter={async (newFilter: SearchFields) => {
+                        const local = { ...current, ...newFilter }
+                        
+                        await onSearch(local)
+                    }}
                 />}
 
                 {/*Search results*/}
@@ -163,48 +204,4 @@ export default function SearchUsers(props: SearchUsersProps) {
             </Container>
         </ThemeProvider>
     </SideBar>
-}
-
-
-interface InternalFooterProps {
-    current: SearchFields,
-    onSearchClick: () => Promise<any>,
-    onSaveFilter: () => Promise<any>,
-}
-
-function InternalFooter(props: InternalFooterProps) {
-    const [saveFilter, setSaveFilter] = useState(props.current?.save ?? false);
-
-    const onSearchClick = async () => {
-        if (saveFilter)
-            await props.onSaveFilter();
-
-        await props.onSearchClick();
-    }
-
-    return <Box
-        sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            mt: 3
-        }}
-    >
-        <FormControlLabel
-            control={
-                <Checkbox
-                    checked={saveFilter}
-                    name="hasKids"
-                    color="primary"
-                    onChange={async () => await setSaveFilter(!saveFilter)}
-                />
-            }
-            label={'Salvar filtros'}
-        />
-
-        <MyButton
-            variant="contained"
-            onClick={onSearchClick} sx={{ mr: 1 }}>
-            {'Buscar'}
-        </MyButton>
-    </Box>
 }

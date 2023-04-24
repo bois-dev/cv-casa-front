@@ -43,8 +43,8 @@ export default function SearchUsersMoreFilters(props: SearchUsersMoreFiltersProp
                         itemsFrom={[
                             { value: -1, label: 'Indiferente' },
                             { value: 16, label: '16' },
-                            { value: 16, label: '20' },
-                            { value: 16, label: '25' },
+                            { value: 20, label: '20' },
+                            { value: 25, label: '25' },
                         ]}
                         itemsTo={[
                             { value: -1, label: 'Indiferente' },
