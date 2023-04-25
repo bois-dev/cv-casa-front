@@ -1,4 +1,4 @@
-import { Backdrop, Box, Button, Checkbox, CircularProgress, Divider, FormControlLabel, ThemeProvider, createTheme } from "@mui/material";
+import { Backdrop, Box, Button, Checkbox, CircularProgress, FormControlLabel, ThemeProvider, createTheme } from "@mui/material";
 import PageTitle from "../../components/title/pagetitle.component";
 import Container from '@mui/material/Container';
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import SearchUsersService from "./search-users.service";
 import { SearchFields } from "./search-users.interfaces";
 import NakedSelect from "../../components/select/naked-select.component";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import SearchUsersMoreFilters from "./search-users-more-filters.page";
+import SearchUsersMoreFiltersDialog from "./search-users-more-filters.dialog";
 
 const theme = createTheme();
 const filterKey = 'search-users';
@@ -29,6 +29,8 @@ export default function SearchUsers(props: SearchUsersProps) {
     const [submiting, setSubmiting] = useState(false);
     const [showMoreFilters, setShowMoreFilters] = useState(false);
 
+    const service = new SearchUsersService();
+
     useEffect(() => {
         const filters: SearchFields = JSON.parse(localStorage.getItem(filterKey)!);
 
@@ -39,8 +41,7 @@ export default function SearchUsers(props: SearchUsersProps) {
         else setCurrent({ save: false } as SearchFields)
     }, [])
 
-    // eslint-disable-next-line
-    let service: SearchUsersService;
+    
 
     const onSearch = async (local: SearchFields) => {
         //validate
@@ -52,10 +53,9 @@ export default function SearchUsers(props: SearchUsersProps) {
             await onSaveFilter(local)
 
         try {
-            service ??= new SearchUsersService();
-
             await service.search(local)
         } catch (e: any) {
+            console.log(e)
             toast.error(e)
         }
         finally {
@@ -63,15 +63,17 @@ export default function SearchUsers(props: SearchUsersProps) {
         }
     }
 
-    const onSaveFilter = async (localCurrent: SearchFields) => {
-        console.log(localCurrent)
-        localStorage.setItem(filterKey, JSON.stringify(localCurrent))
+    const onSaveFilter = async (local: SearchFields) => {
+        localStorage.setItem(filterKey, JSON.stringify(local))
     }
 
     const getTotalOtherFiltersApplied = (): number => {
         let total = 0;
 
         if ((current?.age?.from ?? -1) !== -1 || (current?.age?.to ?? -1) !== -1) total++;
+        if ((current?.peopleQt?.from ?? -1) !== -1 || (current?.peopleQt?.to ?? -1) !== -1) total++;
+        if ((current?.wantsToPay?.from ?? -1) !== -1 || (current?.wantsToPay?.to ?? -1) !== -1) total++;
+        if ((current?.antecipateRents?.from ?? -1) !== -1 || (current?.antecipateRents?.to ?? -1) !== -1) total++;
 
         return total;
     }
@@ -80,12 +82,13 @@ export default function SearchUsers(props: SearchUsersProps) {
         <ThemeProvider theme={theme}>
             <Container maxWidth="lg">
                 <PageTitle text="Buscar usuarios" />
-                <Divider sx={{ mb: 2 }} />
 
                 <Box sx={{
                     display: 'flex',
                     flexWrap: 'wrap',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    justifyContent: 'space-evenly',
+                    maxWidth: '1000px'
                 }}>
                     <Button
                         variant="contained"
@@ -189,12 +192,12 @@ export default function SearchUsers(props: SearchUsersProps) {
                     <CircularProgress color="inherit" />
                 </Backdrop>
 
-                {showMoreFilters && <SearchUsersMoreFilters
+                {showMoreFilters && <SearchUsersMoreFiltersDialog
                     current={current}
                     onClose={async () => await setShowMoreFilters(false)}
                     onFilter={async (newFilter: SearchFields) => {
                         const local = { ...current, ...newFilter }
-                        
+
                         await onSearch(local)
                     }}
                 />}

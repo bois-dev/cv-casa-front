@@ -1,19 +1,16 @@
 export interface SearchFields {
-    save : boolean,
-    
+    save: boolean,
+
     age: { from: number, to: number },
 
-    peopleQtFrom: number,
-    peopleQtTo: number,
+    peopleQt: { from: number, to: number },
 
-    wantsToPayFrom: number,
-    wantsToPayTo: number,
+    wantsToPay: { from: number, to: number },
 
-    antecipateRentsFrom: number,
-    antecipateRentsTo: number,
+    antecipateRents: { from: number, to: number },
 
     hasPets: number,
     hasKids: number,
     hasDocs: number,
-    alreadyInSpain: number,        
+    alreadyInSpain: number,
 }

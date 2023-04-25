@@ -81,7 +81,7 @@ export class HttpClient {
         return axios.get(url, { ...this.getDefaultOptions(), ...options });
     }
 
-    public async post(url: string, data: any, options: AxiosRequestConfig<any> = {}): Promise<AxiosResponse<any, any>> {
+    public async post(url: string, data: any = {}, options: AxiosRequestConfig<any> = {}): Promise<AxiosResponse<any, any>> {
         return axios.post(url, data, { ...this.getDefaultOptions(), ...options });
     }
 
