@@ -1,15 +1,15 @@
 export interface User {    
-    fullname: string,    
-    age: number,
-    peopleQt: number,
-    wantsToPay: number,
-    antecipateRents: number,
-    hasKids: boolean,
-    hasPets: boolean,
-    hasDocs: boolean,
+    fullname: string,   // 
+    age: number,//
+    peopleQt: number,//
+    wantsToPay: number,//
+    antecipateRents: number,//
+    hasKids: boolean,//
+    hasPets: boolean,//
+    hasDocs: boolean,//
     alreadyInSpain: boolean,
-    documents: UserDocument[],
-    contacts: UserContact
+    contacts: UserContact,
+    documents?: UserDocument[],    
 }
 
 export interface UserDocument {
@@ -19,11 +19,11 @@ export interface UserDocument {
     date: Date,
 }
 
-export interface UserContact {
-    tel: string,
+export interface UserContact {    
     cel: string,
     email:string,
-    instagram:string,
-    facebook:string,
-    linkedin:string,
+    tel?: string,
+    instagram?:string,
+    facebook?:string,
+    linkedin?:string,
 }

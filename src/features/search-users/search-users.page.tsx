@@ -9,6 +9,9 @@ import { SearchFields } from "./search-users.interfaces";
 import NakedSelect from "../../components/select/naked-select.component";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import SearchUsersMoreFiltersDialog from "./search-users-more-filters.dialog";
+import { User } from "../../model/user.model";
+import UserContacts from "../register-user/contacts/register-user-contacts.page";
+import SearchResultItem from "./search-users-item.page";
 
 const theme = createTheme();
 const filterKey = 'search-users';
@@ -25,6 +28,7 @@ const defaultItemsBoolean = [
 
 export default function SearchUsers(props: SearchUsersProps) {
     const [current, setCurrent] = useState<SearchFields>(props.search!);
+    const [users, setUsers] = useState<User[]>();
 
     const [submiting, setSubmiting] = useState(false);
     const [showMoreFilters, setShowMoreFilters] = useState(false);
@@ -41,7 +45,7 @@ export default function SearchUsers(props: SearchUsersProps) {
         else setCurrent({ save: false } as SearchFields)
     }, [])
 
-    
+
 
     const onSearch = async (local: SearchFields) => {
         //validate
@@ -53,7 +57,42 @@ export default function SearchUsers(props: SearchUsersProps) {
             await onSaveFilter(local)
 
         try {
-            await service.search(local)
+            //const { data } = await service.search(local)
+            const data: User[] = [
+                {
+                    age: 34,
+                    alreadyInSpain: true,
+                    antecipateRents: 6,
+                    fullname: "Rogerson Nazario",
+                    hasDocs: true,
+                    hasKids: true,
+                    hasPets: true,
+                    contacts: {
+                        email: "rrnazario@gmail.com",
+                        cel: "988643732"
+                    },
+                    peopleQt: 0,
+                    wantsToPay: 1000,
+                },
+                {
+                    age: 30,
+                    alreadyInSpain: true,
+                    antecipateRents: 3,
+                    fullname: "Thuane Mello",
+                    hasDocs: true,
+                    hasKids: false,
+                    hasPets: true,
+                    contacts: {
+                        email: "thuanemello17@gmail.com",
+                        cel: "99998888"
+                    },
+                    peopleQt: 1,
+                    wantsToPay: 950,
+                },
+            ]
+            if (data) {
+                await setUsers(data)
+            }
         } catch (e: any) {
             console.log(e)
             toast.error(e)
@@ -185,6 +224,14 @@ export default function SearchUsers(props: SearchUsersProps) {
                     />
                 </Box>
 
+                {users && <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    flexWrap: 'wrap'
+                }}>
+                    {users.map((user, index) => <SearchResultItem key={index} user={user} />)}
+                </Box>}
+
                 <Backdrop
                     sx={{ color: '#fff' }}
                     open={submiting}
@@ -201,8 +248,6 @@ export default function SearchUsers(props: SearchUsersProps) {
                         await onSearch(local)
                     }}
                 />}
-
-                {/*Search results*/}
 
             </Container>
         </ThemeProvider>
