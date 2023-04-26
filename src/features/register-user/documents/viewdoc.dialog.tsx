@@ -10,6 +10,7 @@ import { StringHelper } from '../../../helpers/string.helper';
 import ImageViewer from '../../../components/viewer/image-viewer.component';
 
 interface ViewDocumentDialogProps {
+    name?:string,
     current: File,
     onClose: () => Promise<any>
 }
@@ -33,17 +34,15 @@ export default function ViewDocumentDialog(props: ViewDocumentDialogProps) {
     }, [props])
 
     return (
-        <div>
-            <Dialog open maxWidth={'xl'} fullWidth>
-                <DialogTitle>Veer Documento</DialogTitle>
-                <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Divider />
-                    {base64 && (isPdf ? <PdfViewer src={base64} /> : <ImageViewer src={base64} />)}
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={props.onClose}>OK</Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+        <Dialog open maxWidth={'xl'} fullWidth>
+            <DialogTitle>{`Veer Documento${props.name ? ` '${props.name}'` : ''}`}</DialogTitle>
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Divider />
+                {base64 && (isPdf ? <PdfViewer src={base64} /> : <ImageViewer src={base64} />)}
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={props.onClose}>OK</Button>
+            </DialogActions>
+        </Dialog>
     );
 }

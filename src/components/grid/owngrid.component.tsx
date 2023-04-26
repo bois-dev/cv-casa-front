@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, SxProps, Theme } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { DataGrid, GridColDef, GridOverlay } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 interface OwnGridProps {
     columns: GridColDef[],
     rows: any[]
-    loading?: boolean
+    loading?: boolean,
+    sx?: SxProps<Theme>,
 }
 
 interface StateProps {
@@ -37,6 +38,7 @@ export default function OwnGrid(props: OwnGridProps) {
             '& .super-app-theme--header': {
                 backgroundColor: blue[50],
             },
+            ...props.sx!
         }}>
         <DataGrid
             rows={stateProps.rows}

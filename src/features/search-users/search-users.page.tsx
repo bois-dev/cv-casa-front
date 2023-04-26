@@ -10,8 +10,9 @@ import NakedSelect from "../../components/select/naked-select.component";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import SearchUsersMoreFiltersDialog from "./search-users-more-filters.dialog";
 import { User } from "../../model/user.model";
-import UserContacts from "../register-user/contacts/register-user-contacts.page";
 import SearchResultItem from "./search-users-item.page";
+
+import avatar from '../../assets/avatar.png'
 
 const theme = createTheme();
 const filterKey = 'search-users';
@@ -33,7 +34,8 @@ export default function SearchUsers(props: SearchUsersProps) {
     const [submiting, setSubmiting] = useState(false);
     const [showMoreFilters, setShowMoreFilters] = useState(false);
 
-    const service = new SearchUsersService();
+    // eslint-disable-next-line
+    let service = new SearchUsersService();
 
     useEffect(() => {
         const filters: SearchFields = JSON.parse(localStorage.getItem(filterKey)!);
@@ -88,6 +90,27 @@ export default function SearchUsers(props: SearchUsersProps) {
                     },
                     peopleQt: 1,
                     wantsToPay: 950,
+                    documents: [
+                        {
+                            date: new Date(2023, 1, 1),
+                            id: 0,
+                            name: 'papel',
+                            file: new File([new Blob([avatar])], "example.jpg")
+                        },
+                        {
+                            date: new Date(2023, 1, 1),
+                            id: 3,
+                            name: 'papelada',
+                            file: new File([new Blob([avatar])], "example.jpg")
+                        },
+                        {
+                            date: new Date(2023, 1, 1),
+                            id: 2,
+                            name: 'jajajaja',
+                            file: new File([new Blob([avatar])], "example.jpg")
+                        },
+
+                    ]
                 },
             ]
             if (data) {
@@ -126,7 +149,7 @@ export default function SearchUsers(props: SearchUsersProps) {
                     display: 'flex',
                     flexWrap: 'wrap',
                     alignItems: 'center',
-                    justifyContent: 'space-evenly',
+                    justifyContent: 'space-around',
                     maxWidth: '1000px'
                 }}>
                     <Button
@@ -140,7 +163,7 @@ export default function SearchUsers(props: SearchUsersProps) {
 
                         }}
                         onClick={async () => await setShowMoreFilters(true)}>
-                        {`Filtros (${getTotalOtherFiltersApplied()})`}
+                        {`+Filtros (${getTotalOtherFiltersApplied()})`}
                     </Button>
 
                     <NakedSelect
@@ -202,7 +225,7 @@ export default function SearchUsers(props: SearchUsersProps) {
                     sx={{
                         display: 'flex',
                         justifyContent: 'space-between',
-                        mt: 3
+                        mt: 3, mb: 3
                     }}
                 >
                     <FormControlLabel

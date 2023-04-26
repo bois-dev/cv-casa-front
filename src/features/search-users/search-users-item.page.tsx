@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Card, CardContent, CardMedia, IconButton, SxProps, Theme, Tooltip, Typography, useTheme } from "@mui/material"
+import { Avatar, Box, Button, Card, CardContent, CardMedia, SxProps, Theme, Tooltip, Typography } from "@mui/material"
 import MailIcon from '@mui/icons-material/Mail';
 import { User } from "../../model/user.model"
 import avatar from '../../assets/avatar.png'
@@ -6,13 +6,16 @@ import avatar from '../../assets/avatar.png'
 import PaidIcon from '@mui/icons-material/Paid';
 import PeopleIcon from '@mui/icons-material/People';
 import ChildFriendlyIcon from '@mui/icons-material/ChildFriendly';
+import PlagiarismIcon from '@mui/icons-material/Plagiarism';
 import PetsIcon from '@mui/icons-material/Pets';
 import TaskIcon from '@mui/icons-material/Task';
 
-import { blue, green } from "@mui/material/colors";
+import { green } from "@mui/material/colors";
+import SearchUsersViewDocsDialog from "./search-users-view-docs.dialog";
+import { useState } from "react";
 
 interface SearchResultItemProps {
-    user: User
+    user: User,
 }
 
 const formatter = new Intl.NumberFormat('es-ES', {
@@ -22,6 +25,7 @@ const formatter = new Intl.NumberFormat('es-ES', {
 })
 
 export default function SearchResultItem(props: SearchResultItemProps) {
+    const [viewDocs, setViewDocs] = useState(false)
 
     return <>
         <Card sx={{ display: 'flex', ml: 2, mb: 2, width: 500, backgroundColor: '#F5FBFF' }}>
@@ -82,7 +86,7 @@ export default function SearchResultItem(props: SearchResultItemProps) {
                             sx={{ width: 24, height: 24, bgcolor: '#c2185b', mr: 1, cursor: 'pointer' }}
                         >
 
-                            <Tooltip title="Tiene mascotas" placement="top">
+                            <Tooltip title="Tiene mascota" placement="top">
                                 <PetsIcon />
                             </Tooltip>
                         </Avatar>}
@@ -104,6 +108,25 @@ export default function SearchResultItem(props: SearchResultItemProps) {
                         onClick={async () => { }}>
                         {`Contactar`}
                     </Button>
+
+                    {props.user.documents && props.user.documents.length > 0 && <Button
+                        variant="outlined"
+                        size={'small'}
+                        startIcon={<PlagiarismIcon />}
+                        sx={{
+                            fontSize: 12,
+                            mr: 3,
+                            height: '40px'
+
+                        }}
+                        onClick={async () => await setViewDocs(true)}>
+                        {`Ver documentos`}
+                    </Button>}
+
+                    {viewDocs && <SearchUsersViewDocsDialog
+                        onClose={async () => await setViewDocs(false)}
+                        current={props.user}
+                    />}
                 </Box>
             </Box>
 
