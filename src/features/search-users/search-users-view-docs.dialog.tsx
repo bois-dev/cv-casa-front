@@ -44,7 +44,8 @@ export default function SearchUsersViewDocsDialog(props: SearchUsersViewDocsDial
     const onViewClick = async (row: documentColumn) => {
         await setDialogPageState({ 
             ...dialogState,
-            viewDocumentVisible: true, viewDocumentContent: row.content,
+            viewDocumentVisible: true, 
+            viewDocumentContent: row.content,
             docTitle: row.name
         })
     }

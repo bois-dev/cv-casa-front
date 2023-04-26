@@ -29,7 +29,11 @@ const defaultItemsBoolean = [
 
 export default function SearchUsers(props: SearchUsersProps) {
     const [current, setCurrent] = useState<SearchFields>(props.search!);
-    const [users, setUsers] = useState<User[]>();
+    const [dbUsers, setDbUsers] = useState<{ lastTimeChecked: Date, users: User[] }>({
+        lastTimeChecked: new Date(),
+        users: []
+    });
+    const [filteredUsers, setFilteredUsers] = useState<User[]>();
 
     const [submiting, setSubmiting] = useState(false);
     const [showMoreFilters, setShowMoreFilters] = useState(false);
@@ -38,84 +42,99 @@ export default function SearchUsers(props: SearchUsersProps) {
     let service = new SearchUsersService();
 
     useEffect(() => {
-        const filters: SearchFields = JSON.parse(localStorage.getItem(filterKey)!);
+        let filters: SearchFields = JSON.parse(localStorage.getItem(filterKey)!);
 
-        if (filters && filters.save) {
-            console.log(filters)
-            setCurrent(filters)
-        }
-        else setCurrent({ save: false } as SearchFields)
+        if (!filters || !filters.save)
+            filters = { save: false } as SearchFields;
+
+        setCurrent(filters);
+        onSearch(filters);
     }, [])
 
 
+    const isTimeToGetFromDb = () => {
+        const desiredData = new Date(dbUsers.lastTimeChecked)
+        desiredData.setDate(desiredData.getHours() + 1);
 
+        return desiredData
+    }
     const onSearch = async (local: SearchFields) => {
         //validate
         await setCurrent(local);
 
         await setSubmiting(true);
 
-        if (current.save)
+        if (current?.save)
             await onSaveFilter(local)
 
         try {
-            //const { data } = await service.search(local)
-            const data: User[] = [
-                {
-                    age: 34,
-                    alreadyInSpain: true,
-                    antecipateRents: 6,
-                    fullname: "Rogerson Nazario",
-                    hasDocs: true,
-                    hasKids: true,
-                    hasPets: true,
-                    contacts: {
-                        email: "rrnazario@gmail.com",
-                        cel: "988643732"
-                    },
-                    peopleQt: 0,
-                    wantsToPay: 1000,
-                },
-                {
-                    age: 30,
-                    alreadyInSpain: true,
-                    antecipateRents: 3,
-                    fullname: "Thuane Mello",
-                    hasDocs: true,
-                    hasKids: false,
-                    hasPets: true,
-                    contacts: {
-                        email: "thuanemello17@gmail.com",
-                        cel: "99998888"
-                    },
-                    peopleQt: 1,
-                    wantsToPay: 950,
-                    documents: [
-                        {
-                            date: new Date(2023, 1, 1),
-                            id: 0,
-                            name: 'papel',
-                            file: new File([new Blob([avatar])], "example.jpg")
-                        },
-                        {
-                            date: new Date(2023, 1, 1),
-                            id: 3,
-                            name: 'papelada',
-                            file: new File([new Blob([avatar])], "example.jpg")
-                        },
-                        {
-                            date: new Date(2023, 1, 1),
-                            id: 2,
-                            name: 'jajajaja',
-                            file: new File([new Blob([avatar])], "example.jpg")
-                        },
 
-                    ]
-                },
-            ]
-            if (data) {
-                await setUsers(data)
+            if (isTimeToGetFromDb()) {
+                //const { data } = await service.search(local)
+                const data: User[] = [
+                    {
+                        age: 34,
+                        alreadyInSpain: true,
+                        antecipateRents: 6,
+                        fullname: "Rogerson Nazario",
+                        hasDocs: true,
+                        hasKids: true,
+                        hasPets: true,
+                        contacts: {
+                            email: "rrnazario@gmail.com",
+                            cel: "988643732"
+                        },
+                        peopleQt: 0,
+                        wantsToPay: 1000,
+                    },
+                    {
+                        age: 30,
+                        alreadyInSpain: true,
+                        antecipateRents: 3,
+                        fullname: "Thuane Mello",
+                        hasDocs: true,
+                        hasKids: false,
+                        hasPets: true,
+                        contacts: {
+                            email: "thuanemello17@gmail.com",
+                            cel: "99998888"
+                        },
+                        peopleQt: 1,
+                        wantsToPay: 950,
+                        documents: [
+                            {
+                                date: new Date(2023, 1, 1),
+                                id: 0,
+                                name: 'papel',
+                                file: new File([new Blob([avatar])], "example.jpg")
+                            },
+                            {
+                                date: new Date(2023, 1, 1),
+                                id: 3,
+                                name: 'papelada',
+                                file: new File([new Blob([avatar])], "example.jpg")
+                            },
+                            {
+                                date: new Date(2023, 1, 1),
+                                id: 2,
+                                name: 'jajajaja',
+                                file: new File([new Blob([avatar])], "example.jpg")
+                            },
+
+                        ]
+                    },
+                ]
+                if (data) {
+                    await setDbUsers({
+                        lastTimeChecked: new Date(),
+                        users: data
+                    })
+
+                    await applyFilter(data, local);
+                }
             }
+            else await applyFilter(dbUsers.users, local);
+
         } catch (e: any) {
             console.log(e)
             toast.error(e)
@@ -125,19 +144,56 @@ export default function SearchUsers(props: SearchUsersProps) {
         }
     }
 
+    const applyFilter = async (users: User[], filter: SearchFields) => {
+        let localFiltered = [...users]
+
+        const keys = Object.getOwnPropertyNames(filter)
+
+        keys.forEach((key: string) => {
+            const tsKey = key as keyof {}
+
+            const filterField = filter[tsKey]
+
+            if ((typeof filterField) === 'object') { //from, to
+                const obj = (filterField as any)
+
+                if (obj.from !== -1) {
+                    localFiltered = localFiltered.filter(user => user[tsKey] >= obj.from &&
+                        ((obj.to !== -1 && user[tsKey] <= obj.to) || (obj.to === undefined || obj.to === -1)))
+                }
+                else
+                    if (obj.to !== -1)
+                        localFiltered = localFiltered.filter(user => user[tsKey] <= obj.to)
+            } else
+                if ((typeof filterField) === 'number' && (filterField as number) !== -1) {
+                    localFiltered = localFiltered.filter(user => user[tsKey] === Boolean(filterField))
+                }
+        });
+
+        await setFilteredUsers([...localFiltered])
+    }
+
     const onSaveFilter = async (local: SearchFields) => {
         localStorage.setItem(filterKey, JSON.stringify(local))
     }
 
     const getTotalOtherFiltersApplied = (): number => {
-        let total = 0;
+        if (!current) return 0;
 
-        if ((current?.age?.from ?? -1) !== -1 || (current?.age?.to ?? -1) !== -1) total++;
-        if ((current?.peopleQt?.from ?? -1) !== -1 || (current?.peopleQt?.to ?? -1) !== -1) total++;
-        if ((current?.wantsToPay?.from ?? -1) !== -1 || (current?.wantsToPay?.to ?? -1) !== -1) total++;
-        if ((current?.antecipateRents?.from ?? -1) !== -1 || (current?.antecipateRents?.to ?? -1) !== -1) total++;
+        const keys = Object.getOwnPropertyNames(current!);
 
-        return total;
+        return keys.map<number>(key => {
+            const filterField = current[key as keyof {}]
+            if ((typeof filterField) === 'object') { //from, to
+                const obj = (filterField as any)
+
+                if (((obj.from ?? -1) !== -1) || ((obj.to ?? -1) !== -1))
+                    return 1
+            }
+
+            return 0;
+        })
+            .reduce((prev, curr) => prev += curr)
     }
 
     return <SideBar>
@@ -247,12 +303,12 @@ export default function SearchUsers(props: SearchUsersProps) {
                     />
                 </Box>
 
-                {users && <Box sx={{
+                {filteredUsers && <Box sx={{
                     display: 'flex',
                     flexDirection: 'row',
                     flexWrap: 'wrap'
                 }}>
-                    {users.map((user, index) => <SearchResultItem key={index} user={user} />)}
+                    {filteredUsers.map((user, index) => <SearchResultItem key={index} user={user} />)}
                 </Box>}
 
                 <Backdrop

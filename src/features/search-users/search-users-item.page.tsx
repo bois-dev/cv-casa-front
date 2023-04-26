@@ -9,6 +9,7 @@ import ChildFriendlyIcon from '@mui/icons-material/ChildFriendly';
 import PlagiarismIcon from '@mui/icons-material/Plagiarism';
 import PetsIcon from '@mui/icons-material/Pets';
 import TaskIcon from '@mui/icons-material/Task';
+import FlightLandIcon from '@mui/icons-material/FlightLand';
 
 import { green } from "@mui/material/colors";
 import SearchUsersViewDocsDialog from "./search-users-view-docs.dialog";
@@ -61,6 +62,17 @@ export default function SearchResultItem(props: SearchResultItemProps) {
                         display: 'flex',
                         flexDirection: 'row'
                     }}>
+
+                        {props.user.alreadyInSpain && <Avatar
+                            alt="has Pets"
+                            sx={{ width: 24, height: 24, bgcolor: '#f50057', mr: 1, cursor: 'pointer' }}
+                        >
+
+                            <Tooltip title="Ya está en España" placement="top">
+                                <FlightLandIcon />
+                            </Tooltip>
+                        </Avatar>}
+
                         {props.user.hasDocs && <Avatar
                             alt="has Pets"
                             sx={{ width: 24, height: 24, bgcolor: green[900], mr: 1, cursor: 'pointer' }}
@@ -142,7 +154,7 @@ interface AvatarWithTextProps {
 }
 
 function AvatarWithText(props: AvatarWithTextProps) {
-    return <Typography variant="body1" color="text.secondary">
+    return <>
         <Box sx={{
             display: 'flex',
             mb: 1,
@@ -154,9 +166,11 @@ function AvatarWithText(props: AvatarWithTextProps) {
             >
                 {props.icon}
             </Avatar>
-            <Box sx={{
+            <Typography variant="body1" color="text.secondary" sx={{
                 fontWeight: 'bold'
-            }}>{props.value}</Box>
+            }}>
+                {props.value}
+            </Typography>
         </Box>
-    </Typography>
+    </>
 }

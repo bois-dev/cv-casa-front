@@ -52,8 +52,8 @@ export default function SearchUsersMoreFiltersDialog(props: SearchUsersMoreFilte
                             ]}
                             itemsTo={[
                                 { value: -1, label: 'Indiferente' },
-                                { value: 50, label: '30' },
-                                { value: 50, label: '40' },
+                                { value: 30, label: '30' },
+                                { value: 40, label: '40' },
                                 { value: 50, label: '50' },
                                 { value: 80, label: '80' },
                             ]}
