@@ -157,12 +157,12 @@ export default function SearchUsers(props: SearchUsersProps) {
             if ((typeof filterField) === 'object') { //from, to
                 const obj = (filterField as any)
 
-                if (obj.from !== -1) {
+                if (obj.from !== undefined && obj.from !== -1) {
                     localFiltered = localFiltered.filter(user => user[tsKey] >= obj.from &&
                         ((obj.to !== -1 && user[tsKey] <= obj.to) || (obj.to === undefined || obj.to === -1)))
                 }
                 else
-                    if (obj.to !== -1)
+                    if (obj.to !== undefined && obj.to !== -1)
                         localFiltered = localFiltered.filter(user => user[tsKey] <= obj.to)
             } else
                 if ((typeof filterField) === 'number' && (filterField as number) !== -1) {
