@@ -13,6 +13,7 @@ import FlightLandIcon from '@mui/icons-material/FlightLand';
 
 import { green } from "@mui/material/colors";
 import SearchUsersViewDocsDialog from "./search-users-view-docs.dialog";
+import SearchUsersViewContactsDialog from "./search-users-view-contacts.dialog";
 import { useState } from "react";
 
 interface SearchResultItemProps {
@@ -27,6 +28,7 @@ const formatter = new Intl.NumberFormat('es-ES', {
 
 export default function SearchResultItem(props: SearchResultItemProps) {
     const [viewDocs, setViewDocs] = useState(false)
+    const [viewContacts, setViewContacts] = useState(false)
 
     return <>
         <Card sx={{ display: 'flex', ml: 2, mb: 2, width: 500, backgroundColor: '#F5FBFF' }}>
@@ -117,7 +119,7 @@ export default function SearchResultItem(props: SearchResultItemProps) {
                             height: '40px'
 
                         }}
-                        onClick={async () => { }}>
+                        onClick={async () => await setViewContacts(true)}>
                         {`Contactar`}
                     </Button>
 
@@ -137,6 +139,11 @@ export default function SearchResultItem(props: SearchResultItemProps) {
 
                     {viewDocs && <SearchUsersViewDocsDialog
                         onClose={async () => await setViewDocs(false)}
+                        current={props.user}
+                    />}
+
+                    {viewContacts && <SearchUsersViewContactsDialog
+                        onClose={async () => await setViewContacts(false)}
                         current={props.user}
                     />}
                 </Box>

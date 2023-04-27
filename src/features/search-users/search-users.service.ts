@@ -12,6 +12,10 @@ export class SearchUsersService {
     public async search(data: SearchFields): Promise<AxiosResponse<any, any>> {
         return this.request.post(`auth`, data);
     }
+
+    public async contacts(userId: number, realtorId: number): Promise<AxiosResponse<any, any>> {
+        return this.request.get(`contacts?userId=${userId}&realtorId=${realtorId}`);
+    }
 }
 
 

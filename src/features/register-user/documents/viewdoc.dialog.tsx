@@ -34,7 +34,7 @@ export default function ViewDocumentDialog(props: ViewDocumentDialogProps) {
     }, [props])
 
     return (
-        <Dialog open maxWidth={'xl'} fullWidth>
+        <Dialog open onClose={props.onClose} maxWidth={'xl'} fullWidth>
             <DialogTitle>{`Veer Documento${props.name ? ` '${props.name}'` : ''}`}</DialogTitle>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Divider />

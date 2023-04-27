@@ -14,13 +14,12 @@ import SearchResultItem from "./search-users-item.page";
 
 import moment from 'moment'
 
-import avatar from '../../assets/avatar.png'
-
 const theme = createTheme();
 const filterKey = 'search-users';
 
 const fakeData: User[] = [
     {
+        id: 0,
         age: 34,
         alreadyInSpain: true,
         antecipateRents: 6,
@@ -36,6 +35,7 @@ const fakeData: User[] = [
         wantsToPay: 1000,
     },
     {
+        id: 1,
         age: 30,
         alreadyInSpain: true,
         antecipateRents: 3,
@@ -54,19 +54,19 @@ const fakeData: User[] = [
                 date: new Date(2023, 1, 1),
                 id: 0,
                 name: 'papel',
-                file: new File([new Blob([avatar])], "example.jpg")
+                file: new File([new Blob(['avatar'])], "example.jpg")
             },
             {
                 date: new Date(2023, 1, 1),
                 id: 3,
                 name: 'papelada',
-                file: new File([new Blob([avatar])], "example.jpg")
+                file: new File([new Blob(['avatar'])], "example.jpg")
             },
             {
                 date: new Date(2023, 1, 1),
                 id: 2,
                 name: 'jajajaja',
-                file: new File([new Blob([avatar])], "example.jpg")
+                file: new File([new Blob(['avatar'])], "example.jpg")
             },
 
         ]
@@ -106,7 +106,7 @@ export default function SearchUsers(props: SearchUsersProps) {
         setCurrent(filters);
         onSearch(filters);
 
-        // eslint-disable-next-line        
+        // eslint-disable-next-line
     }, [])
 
 
@@ -131,7 +131,6 @@ export default function SearchUsers(props: SearchUsersProps) {
             if (isTimeToGetFromDb()) {
                 const newDate = new Date(moment().add(1, 'hour').format())
                 //const { data } = await service.search(local)
-                console.log(`got from DB. New date: ${newDate}`)
                 const data = [...fakeData]
 
                 if (data) {
