@@ -12,10 +12,66 @@ import SearchUsersMoreFiltersDialog from "./search-users-more-filters.dialog";
 import { User } from "../../model/user.model";
 import SearchResultItem from "./search-users-item.page";
 
+import moment from 'moment'
+
 import avatar from '../../assets/avatar.png'
 
 const theme = createTheme();
 const filterKey = 'search-users';
+
+const fakeData: User[] = [
+    {
+        age: 34,
+        alreadyInSpain: true,
+        antecipateRents: 6,
+        fullname: "Rogerson Nazario",
+        hasDocs: true,
+        hasKids: true,
+        hasPets: true,
+        contacts: {
+            email: "rrnazario@gmail.com",
+            cel: "988643732"
+        },
+        peopleQt: 0,
+        wantsToPay: 1000,
+    },
+    {
+        age: 30,
+        alreadyInSpain: true,
+        antecipateRents: 3,
+        fullname: "Thuane Mello",
+        hasDocs: true,
+        hasKids: false,
+        hasPets: true,
+        contacts: {
+            email: "thuanemello17@gmail.com",
+            cel: "99998888"
+        },
+        peopleQt: 1,
+        wantsToPay: 950,
+        documents: [
+            {
+                date: new Date(2023, 1, 1),
+                id: 0,
+                name: 'papel',
+                file: new File([new Blob([avatar])], "example.jpg")
+            },
+            {
+                date: new Date(2023, 1, 1),
+                id: 3,
+                name: 'papelada',
+                file: new File([new Blob([avatar])], "example.jpg")
+            },
+            {
+                date: new Date(2023, 1, 1),
+                id: 2,
+                name: 'jajajaja',
+                file: new File([new Blob([avatar])], "example.jpg")
+            },
+
+        ]
+    },
+]
 
 export interface SearchUsersProps {
     search?: SearchFields
@@ -30,7 +86,7 @@ const defaultItemsBoolean = [
 export default function SearchUsers(props: SearchUsersProps) {
     const [current, setCurrent] = useState<SearchFields>(props.search!);
     const [dbUsers, setDbUsers] = useState<{ lastTimeChecked: Date, users: User[] }>({
-        lastTimeChecked: new Date(),
+        lastTimeChecked: new Date(moment().subtract(1, 'day').format()),
         users: []
     });
     const [filteredUsers, setFilteredUsers] = useState<User[]>();
@@ -49,15 +105,18 @@ export default function SearchUsers(props: SearchUsersProps) {
 
         setCurrent(filters);
         onSearch(filters);
+
+        // eslint-disable-next-line        
     }, [])
 
 
     const isTimeToGetFromDb = () => {
-        const desiredData = new Date(dbUsers.lastTimeChecked)
-        desiredData.setDate(desiredData.getHours() + 1);
+        const futureDate = moment();
+        const currentDate = moment(dbUsers.lastTimeChecked);
 
-        return desiredData
+        return currentDate < futureDate
     }
+
     const onSearch = async (local: SearchFields) => {
         //validate
         await setCurrent(local);
@@ -70,63 +129,14 @@ export default function SearchUsers(props: SearchUsersProps) {
         try {
 
             if (isTimeToGetFromDb()) {
+                const newDate = new Date(moment().add(1, 'hour').format())
                 //const { data } = await service.search(local)
-                const data: User[] = [
-                    {
-                        age: 34,
-                        alreadyInSpain: true,
-                        antecipateRents: 6,
-                        fullname: "Rogerson Nazario",
-                        hasDocs: true,
-                        hasKids: true,
-                        hasPets: true,
-                        contacts: {
-                            email: "rrnazario@gmail.com",
-                            cel: "988643732"
-                        },
-                        peopleQt: 0,
-                        wantsToPay: 1000,
-                    },
-                    {
-                        age: 30,
-                        alreadyInSpain: true,
-                        antecipateRents: 3,
-                        fullname: "Thuane Mello",
-                        hasDocs: true,
-                        hasKids: false,
-                        hasPets: true,
-                        contacts: {
-                            email: "thuanemello17@gmail.com",
-                            cel: "99998888"
-                        },
-                        peopleQt: 1,
-                        wantsToPay: 950,
-                        documents: [
-                            {
-                                date: new Date(2023, 1, 1),
-                                id: 0,
-                                name: 'papel',
-                                file: new File([new Blob([avatar])], "example.jpg")
-                            },
-                            {
-                                date: new Date(2023, 1, 1),
-                                id: 3,
-                                name: 'papelada',
-                                file: new File([new Blob([avatar])], "example.jpg")
-                            },
-                            {
-                                date: new Date(2023, 1, 1),
-                                id: 2,
-                                name: 'jajajaja',
-                                file: new File([new Blob([avatar])], "example.jpg")
-                            },
+                console.log(`got from DB. New date: ${newDate}`)
+                const data = [...fakeData]
 
-                        ]
-                    },
-                ]
                 if (data) {
                     await setDbUsers({
-                        lastTimeChecked: new Date(),
+                        lastTimeChecked: newDate,
                         users: data
                     })
 
