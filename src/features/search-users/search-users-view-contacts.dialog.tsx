@@ -1,19 +1,19 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { User, UserContact } from '../../model/user.model';
-import { Box } from '@mui/material';
+import { Box, Divider, SxProps, Theme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import SearchUsersService from './search-users.service';
-import { Link } from '@mui/icons-material';
 
 import LinkedinIcon from '@mui/icons-material/LinkedIn';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import EmailIcon from '@mui/icons-material/Email';
+import CallIcon from '@mui/icons-material/Call';
 
 interface SearchUsersViewContactsProps {
     current?: User,
@@ -22,8 +22,10 @@ interface SearchUsersViewContactsProps {
 
 const fakeData: UserContact = {
     cel: '+5532',
+    tel: '+335544',
     email: 'rrnazario',
     linkedin: 'https://www.linkedin.com/in/rrnazario',
+    facebook: 'https://fb.com/rogimnazario',
 }
 
 export default function SearchUsersViewContactsDialog(props: SearchUsersViewContactsProps) {
@@ -58,15 +60,24 @@ export default function SearchUsersViewContactsDialog(props: SearchUsersViewCont
         <Dialog open onClose={handleClose} fullWidth>
             <DialogTitle>{`Veer contactos de ${props.current?.fullname ?? 'usuario'}`}</DialogTitle>
             <DialogContent>
+                <Divider sx={{ mb: 3 }} />
                 <Box sx={{
                     display: 'flex',
-                    margin: 10,
-                    flexDirection: 'column',
+                    padding: 5,
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    borderStyle: 'solid',
+                    borderRadius: '20px',
+                    maxWidth: '500px'
                 }}>
 
+                    {contacts?.email && <LinkItem icon={<EmailIcon />} text='Correo' url={`mailto:${contacts.email}`} />}
+                    {contacts?.tel && <LinkItem icon={<CallIcon />} text='Llamar' url={`tel:${contacts.tel}`} />}
                     {contacts?.linkedin && <LinkItem icon={<LinkedinIcon />} text='LinkedIn' url={contacts.linkedin} />}
                     {contacts?.instagram && <LinkItem icon={<InstagramIcon />} text='Instagram' url={contacts.instagram} />}
                     {contacts?.cel && <LinkItem icon={<WhatsAppIcon />} text='WhatsApp' url={`https://wa.me/${contacts.cel}`} />}
+                    {contacts?.facebook && <LinkItem icon={<FacebookIcon />} text='Facebook' url={`${contacts.facebook}`} />}
 
                 </Box>
             </DialogContent>
@@ -77,11 +88,11 @@ export default function SearchUsersViewContactsDialog(props: SearchUsersViewCont
     </>);
 }
 
-function LinkItem(props: { icon: any, text: string, url: string }) {
+function LinkItem(props: { icon: any, text: string, url: string, sx?: SxProps<Theme> }) {
     return <Box sx={{
-        display: 'flex',        
+        display: 'flex',
         width: '110px',
-        mb: 3,
+        ...props.sx!
     }}>
         <Box component='a' href={props.url} target='_blank'
             sx={{
