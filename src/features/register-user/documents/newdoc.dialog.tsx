@@ -39,7 +39,7 @@ export default function NewDocumentDialog(props: NewDocumentDialogProps) {
 
     return (
         <div>
-            <Dialog open={open} onClose={handleClose} fullWidth>
+            <Dialog open={open} fullWidth>
                 <DialogTitle>Añadir Documento</DialogTitle>
                 <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Divider />

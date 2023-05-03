@@ -12,27 +12,21 @@ export interface AlertProps {
     onConfirm : () => Promise<any>,
 }
 
-export default function AlertDialog(props : AlertProps) {
-    const onCancel = async () => {
-        await props.onCancel()
-    }
+export default function AlertDialog(props : AlertProps) {    
+  const { title, text, onCancel, onConfirm } = props;
 
-    const onConfirm = async () => {
-        await props.onConfirm()
-    }
-  
-    return (
+  return (
       <Dialog
         open
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby={title ?? 'Atencion'}
+        aria-describedby={text}
       >
         <DialogTitle id="alert-dialog-title">
-          {props.title ?? 'Atención'}
+          {title ?? 'Atención'}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {props.text}
+            {text}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

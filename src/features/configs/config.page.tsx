@@ -1,42 +1,39 @@
-import { Button } from "@mui/material";
-import Footer from "../../components/footer/footer.component";
+import { Button, Container, ThemeProvider, createTheme } from "@mui/material";
 import PageTitle from "../../components/title/pagetitle.component";
 import { unauthenticate } from "../../redux-ts";
 import { useAppDispatch } from "../../redux-ts/hooks";
+import SideBar from "../../components/sidebar/sidebar.component";
+
+const theme = createTheme();
 
 export function Configurations() {
     const dispatch = useAppDispatch();
 
     const onLogout = async () => {
-        //await setLogoutInfoVisible(false);
-
-        // const { data } = await service.logout({
-        //     login: String(localStorage.getItem('login')),
-        //     token: String(localStorage.getItem('token'))
-        // });
-
         dispatch(unauthenticate());
-        
+
         localStorage.removeItem('token');
         localStorage.removeItem('login');
 
         window.location.reload();
     }
 
-    return <>
-        <PageTitle text="Configurações" />
+    return <SideBar>
+        <ThemeProvider theme={theme}>
+            <Container maxWidth="md">
+                <PageTitle text="Configurações" />
 
-        <div style={{
-            display: 'flex',
-            width: '100%',
-            alignItems: 'center',
-            flexWrap: 'wrap'
-        }}>
-            <Button onClick={onLogout} color={'primary'}>
-                Salir
-            </Button>
-        </div>
-
-        <Footer />
-    </>
+                <div style={{
+                    display: 'flex',
+                    width: '100%',
+                    alignItems: 'center',
+                    flexWrap: 'wrap'
+                }}>
+                    <Button onClick={onLogout} color={'primary'}>
+                        Salir
+                    </Button>
+                </div>
+            </Container>
+        </ThemeProvider>
+    </SideBar>
 }

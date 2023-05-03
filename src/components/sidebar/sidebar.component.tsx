@@ -90,7 +90,7 @@ export default function SideBar(props: React.HTMLAttributes<HTMLDivElement>,) {
                         display: 'flex',
                         flexDirection: 'column',
                     }}>
-                        <Avatar sx={{ m: 1 }} src={logo} />
+                        <Avatar sx={{ m: 1, cursor: 'pointer' }} src={logo} onClick={async () => await handleNavigation('/')} />
                         <IconButton onClick={handleOpen}>
                             {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                         </IconButton>
