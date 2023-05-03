@@ -9,16 +9,14 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import { useState } from 'react';
 import { Avatar } from '@mui/material';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import { useNavigate } from 'react-router-dom';
-import { ClosedSidebarFooter, OpenedSidebarFooter } from './sidebarfooter';
+import { SidebarFooter } from './sidebar-footer';
 
 import logo from '../../assets/logo.png'
+import { SideBarItem } from './sidebar-item';
 
 const drawerWidth = 240;
 
@@ -98,37 +96,24 @@ export default function SideBar(props: React.HTMLAttributes<HTMLDivElement>,) {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    <ListItem disablePadding sx={{ display: 'block' }}>
-                        <ListItemButton
-                            sx={{
-                                minHeight: 48,
-                                justifyContent: open ? 'initial' : 'center',
-                                px: 2.5,
-                            }}
-                            onClick={async () => await handleNavigation('/config')}
-                        >
-                            <ListItemIcon
-                                sx={{
-                                    minWidth: 0,
-                                    mr: open ? 3 : 'auto',
-                                    justifyContent: 'center',
-                                }}
-                            >
-                                <ConstructionIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={'Configuración'} sx={{ opacity: open ? 1 : 0 }} />
-                        </ListItemButton>
-                    </ListItem>
-                    <Divider />
+                    <SideBarItem
+                        icon={<ConstructionIcon />}
+                        open={open}
+                        path={'/config'}
+                        text={'Configuración'}
+                    />
+
+                    <SideBarItem
+                        icon={<ConstructionIcon />}
+                        open={open}
+                        path={'/config'}
+                        text={'Configuración'}
+                    />
                 </List>
 
                 <List style={{ marginTop: `auto` }} >
                     <ListItem>
-                        {!open ? <ClosedSidebarFooter userName='Rogerson Nazario'/> : <>
-                            <OpenedSidebarFooter
-                                userName='Rogerson Nazario'
-                            />
-                        </>}
+                        <SidebarFooter userName='Rogerson Nazario' open={open} />
                     </ListItem>
                 </List>
             </Drawer>

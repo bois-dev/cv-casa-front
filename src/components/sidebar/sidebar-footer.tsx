@@ -5,25 +5,11 @@ import { useState } from 'react';
 const avatarSx = { cursor: 'pointer' }
 
 export interface SidebarFooterProps {
-    userName: string
+    userName: string,
+    open: boolean
 }
 
-export function ClosedSidebarFooter(props: SidebarFooterProps) {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>();
-    const [showContextMenu, setShowContextMenu] = useState(false);
-
-    return <>
-        <ContextMenu anchorEl={anchorEl!} open={showContextMenu} onClose={() => setShowContextMenu(false)} />
-        <Avatar sx={avatarSx}
-            onClick={(e) => {
-                setAnchorEl(e.currentTarget)
-                setShowContextMenu(true)
-            }}>{props.userName[0]}</Avatar>
-    </>
-}
-
-
-export function OpenedSidebarFooter(props: SidebarFooterProps) {
+export function SidebarFooter(props: SidebarFooterProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>();
     const [showContextMenu, setShowContextMenu] = useState(false);
 
@@ -37,6 +23,11 @@ export function OpenedSidebarFooter(props: SidebarFooterProps) {
             }}
         >{props.userName[0]}</Avatar>
 
-        <h5 style={{ marginTop: 10, cursor: 'pointer' }}>{props.userName}</h5>
+        {props.open && <h5
+            style={{ marginTop: 10, cursor: 'pointer' }}
+            onClick={(e) => {
+                setAnchorEl(e.currentTarget)
+                setShowContextMenu(true)
+            }}>{props.userName}</h5>}
     </Stack>
 }
