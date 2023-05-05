@@ -5,11 +5,12 @@ interface SideBarItemProps {
     open: boolean,
     path: string,
     text: string,
-    icon: any
+    icon: any,
+    divider?:boolean
 }
 
 export function SideBarItem(props: SideBarItemProps) {
-    const { open, path, text } = props;
+    const { open, path, text, divider } = props;
 
     const navigate = useNavigate();
 
@@ -35,6 +36,6 @@ export function SideBarItem(props: SideBarItemProps) {
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
         </ListItem>
-        <Divider />
+        {(divider ?? false) && <Divider />}
     </>
 }

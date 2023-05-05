@@ -67,7 +67,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-export default function SideBar(props: React.HTMLAttributes<HTMLDivElement>,) {
+export function SideBar(props: React.HTMLAttributes<HTMLDivElement>,) {
     const [open, setOpen] = useState(false);
     const { children } = props;
 
@@ -101,6 +101,7 @@ export default function SideBar(props: React.HTMLAttributes<HTMLDivElement>,) {
                         open={open}
                         path={'/config'}
                         text={'Configuración'}
+                        divider
                     />
 
                     <SideBarItem
@@ -108,6 +109,7 @@ export default function SideBar(props: React.HTMLAttributes<HTMLDivElement>,) {
                         open={open}
                         path={'/config'}
                         text={'Configuración'}
+                        divider
                     />
                 </List>
 

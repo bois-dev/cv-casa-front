@@ -2,7 +2,6 @@ import { Backdrop, Box, Button, Checkbox, CircularProgress, FormControlLabel, Th
 import PageTitle from "../../components/title/pagetitle.component";
 import Container from '@mui/material/Container';
 import { useEffect, useState } from "react";
-import SideBar from "../../components/sidebar/sidebar.component";
 import { toast } from "react-toastify";
 import SearchUsersService from "./search-users.service";
 import { SearchFields } from "./search-users.interfaces";
@@ -11,8 +10,10 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import SearchUsersMoreFiltersDialog from "./search-users-more-filters.dialog";
 import { User } from "../../model/user.model";
 import SearchResultItem from "./search-users-item.page";
+import { SideBar } from "../../components/sidebar";
 
 import moment from 'moment'
+
 
 const theme = createTheme();
 const filterKey = 'search-users';

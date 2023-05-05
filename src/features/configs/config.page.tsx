@@ -2,7 +2,7 @@ import { Button, Container, ThemeProvider, createTheme } from "@mui/material";
 import PageTitle from "../../components/title/pagetitle.component";
 import { unauthenticate } from "../../redux-ts";
 import { useAppDispatch } from "../../redux-ts/hooks";
-import SideBar from "../../components/sidebar/sidebar.component";
+import { SideBar } from "../../components/sidebar";
 
 const theme = createTheme();
 

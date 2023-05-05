@@ -2,7 +2,7 @@ import { Box, Step, StepButton, Stepper, ThemeProvider, createTheme } from "@mui
 import PageTitle from "../../components/title/pagetitle.component";
 import Container from '@mui/material/Container';
 import { useState } from "react";
-import SideBar from "../../components/sidebar/sidebar.component";
+import { SideBar } from "../../components/sidebar";
 import { toast } from "react-toastify";
 import { Button } from "../../components/button/button.component";
 import { stepLabels } from "./register-realtor.interface";
