@@ -12,6 +12,10 @@ export class RegisterRealtorService {
     public async save(data: Realtor): Promise<AxiosResponse<any, any>> {
         return this.request.post(`auth`, data);
     }
+
+    public async check(id: string): Promise<AxiosResponse<any, any>> {
+        return this.request.post(`check`, id);
+    }
 }
 
 
